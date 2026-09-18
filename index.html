@@ -1,135 +1,753 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <!--
-    HEAD
-    Contiene información sobre el documento.
-    Aquí podemos definir metadata, título, favicon y archivos externos.
-  -->
-
   <meta charset="UTF-8">
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-  <meta
-    name="description"
-    content="Documento base para estudiar estructura HTML, semántica y cajas."
-  >
-  <title>HTML, estructura y cajas</title>
-  <!-- Favicon -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Michis Astrales — descubre tu michi interior. Catálogo semántico por signo y razas.">
+  <title>Michis Astrales</title>
   <link rel="icon" href="favicon.ico">
-  <!-- Hoja de estilos externa -->
   <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
 
-  <!--
-    HEADER
-    Contenido introductorio del documento.
-  -->
   <header>
+    <h1>Michis Astrales</h1>
+    <p>Descubre tu michi interior</p>
 
-    <h1>HTML, estructura y cajas</h1>
-
-    <p>
-      Los elementos HTML generan cajas, pero cada elemento tiene una función dentro del documento.
-    </p>
-
-    <!--
-      NAV
-      Contiene enlaces principales de navegación.
-    -->
-    <nav>
-      <a href="#elementos">Elementos</a>
-      <a href="#estructura">Estructura</a>
-      <a href="#jerarquia">Jerarquía</a>
+    <nav aria-label="Navegación por signos zodiacales">
+      <ul class="nav-signos">
+        <li><a href="#aries">♈ Aries</a></li>
+        <li><a href="#tauro">♉ Tauro</a></li>
+        <li><a href="#geminis">♊ Géminis</a></li>
+        <li><a href="#cancer">♋ Cáncer</a></li>
+        <li><a href="#leo">♌ Leo</a></li>
+        <li><a href="#virgo">♍ Virgo</a></li>
+        <li><a href="#libra">♎ Libra</a></li>
+        <li><a href="#escorpio">♏ Escorpio</a></li>
+        <li><a href="#sagitario">♐ Sagitario</a></li>
+        <li><a href="#capricornio">♑ Capricornio</a></li>
+        <li><a href="#acuario">♒ Acuario</a></li>
+        <li><a href="#piscis">♓ Piscis</a></li>
+      </ul>
     </nav>
-
   </header>
 
-  <!--
-    MAIN
-    Contiene el contenido principal del documento.
-  -->
   <main>
 
-    <!--
-      SECTION
-      Agrupa contenido relacionado por un mismo tema.
-    -->
-    <section id="elementos">
-
-      <h2>Los elementos HTML son cajas</h2>
-
-      <p>
-        Cada elemento ocupa un espacio dentro del documento.
-        El navegador calcula su tamaño, posición y relación con otros elementos.
-      </p>
-
-      <!--
-        ARTICLE
-        Representa una unidad de contenido dentro de esta sección.
-      -->
-      <article>
-
-        <h3>No todas las cajas son iguales</h3>
-
-        <p>
-          Un título, un párrafo y un enlace generan cajas,
-          pero tienen funciones diferentes.
-        </p>
-
-        <a href="#">Esto es un enlace</a>
-
-      </article>
-
+    <section id="introduccion">
+      <h2>Cómo leer esta guía</h2>
+      <p>Esta guía gatuna, te muestra la raza afin a tu fecha de nacimiento, siguiendo las tendencias de los signos zodiacales y el calendario chino; dependiendo está se predicira tu michi interior. Siguiendo las preguntas vas a poder descubrir tu personalidad de gato y quién sería tu michi ideal.</p>
     </section>
 
-    <section id="estructura">
+    <!-- Clasificación popular (movida al final) -->
 
-      <h2>Las cajas forman estructuras</h2>
-
-      <p>
-        Una caja puede contener otras cajas.
-        Las etiquetas HTML describen cómo se relaciona cada parte del contenido.
-      </p>
-
-      <article>
-
-        <h3>Una estructura contiene más estructuras</h3>
-
-        <p>
-          Este artículo está dentro de una sección y contiene
-          a su vez un título y un párrafo.
-        </p>
-
-      </article>
-
+    <!-- Aries -->
+    <section id="aries">
+      <h2>♈ Aries</h2>
+      <p>Razas asociadas: Bengalí, Bengalí de Pelo Largo, Savannah, Toyger, Egyptian Mau, Chausie, Serengeti.</p>
+      <ul>
+        <li>
+          <strong>Bengalí</strong>
+          <ul>
+            <li>Características físicas: Patrón salvaje / pelaje corto (ver catálogo).</li>
+            <li>Fuente: <a href="https://tica.org/breed/american-bobtail/">TICA — American Bobtail</a></li>
+            <li>Años: 2001, 2008, 2015, 2022, 2029</li>
+            <li>Años: 2001, 2008, 2015, 2022, 2029</li>
+            <li>Años: 2001, 2008, 2015, 2022, 2029</li>
+            <li>Años: 2001, 2008, 2015, 2022, 2029</li>
+            <li>Años: 2001, 2008, 2015, 2022, 2029</li>
+            <li>Años: 2001, 2008, 2015, 2022, 2029</li>
+            <li>Años: 2001, 2008, 2015, 2022, 2029</li>
+            <li>Años: 2001, 2008, 2015, 2022, 2029</li>
+            <li>Años: 2001, 2008, 2015, 2022, 2029</li>
+            <li>Fuente: <a href="https://tica.org/breed/bengal/">TICA — Bengal</a></li>
+            <li>Años: 2000, 2007, 2014, 2021, 2028</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Bengalí de Pelo Largo</strong>
+          <ul>
+            <li>Características físicas: Variante de pelaje más largo del Bengalí.</li>
+            <li>Personalidad: Mismo temperamento activo y curioso que el Bengalí.</li>
+            <li>Fuente: <a href="https://www.hillspet.com/pet-care/our-pets/cat-breeds/bengal">Hill's — Bengal (variante pelo largo)</a></li>
+            <li>Años: 2001, 2008, 2015, 2022, 2029</li>
+              <li>Fuente: <a href="https://www.purina.co.uk/find-a-pet/cat-breeds/chartreux">Purina — Chartreux</a></li>
+              <li>Años: 2002, 2009, 2016, 2023, 2030</li>
+              <li>Años: 2002, 2009, 2016, 2023, 2030</li>
+              <li>Años: 2002, 2009, 2016, 2023, 2030</li>
+              <li>Años: 2002, 2009, 2016, 2023, 2030</li>
+              <li>Años: 2002, 2009, 2016, 2023, 2030</li>
+              <li>Años: 2002, 2009, 2016, 2023, 2030</li>
+              <li>Años: 2002, 2009, 2016, 2023, 2030</li>
+              <li>Años: 2002, 2009, 2016, 2023, 2030</li>
+        </li>
+        <li>
+          <strong>Savannah</strong>
+          <ul>
+            <li>Características físicas: Patrón salvaje, cuerpo atlético.</li>
+            <li>Personalidad: Muy activo, curioso, atlético; necesita mucho espacio.</li>
+            <li>Fuente: <a href="https://www.royalcanin.com/mx/cats/breeds/savannah">Royal Canin — Savannah</a></li>
+            <li>Años: 2002, 2009, 2016, 2023, 2030</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Toyger</strong>
+          <ul>
+            <li>Características físicas: Aspecto de tigre en miniatura, patrón rayado.</li>
+            <li>Personalidad: Juguetón, amigable, curioso.</li>
+            <li>Fuente: <a href="https://www.purina.co.uk/find-a-pet/cat-breeds/toyger">Purina — Toyger</a></li>
+            <li>Años: 2003, 2010, 2017, 2024, 2031</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Egyptian Mau</strong>
+          <ul>
+            <li>Características físicas: Pelaje atigrado natural y musculatura ágil.</li>
+            <li>Personalidad: Veloz, ágil, leal a su familia, desconfiado con extraños.</li>
+            <li>Fuente: <a href="https://tica.org/breed/egyptian-mau/">TICA — Egyptian Mau</a></li>
+            <li>Años: 2004, 2011, 2018, 2025, 2032</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Chausie</strong>
+          <ul>
+            <li>Características físicas: Raza grande / atlética (heritage salvaje).</li>
+            <li>Personalidad: Enérgico, atlético, necesita mucho espacio y ejercicio.</li>
+            <li>Fuente: <a href="https://www.hillspet.com/pet-care/our-pets/cat-breeds/chausie">Hill's — Chausie</a></li>
+            <li>Años: 2005, 2012, 2019, 2026, 2033</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Serengeti</strong>
+          <ul>
+            <li>Características físicas: Apariencia salvaje, cuerpo ágil.</li>
+            <li>Personalidad: Alerta, vocal, atlético, muy activo.</li>
+            <li>Fuente: <a href="https://www.royalcanin.com/mx/cats/breeds/serengeti">Royal Canin — Serengeti</a></li>
+            <li>Años: 2006, 2013, 2020, 2027, 2034</li>
+          </ul>
+        </li>
+      </ul>
     </section>
 
-    <section id="jerarquia">
+    <!-- Tauro -->
+    <section id="tauro">
+      <h2>♉ Tauro</h2>
+      <p>Razas asociadas: Persa, Himalayo, Exótico de Pelo Corto, Ragdoll, Chartreux, American Wirehair.</p>
+      <ul>
+        <li>
+          <strong>Persa</strong>
+          <ul>
+            <li>Características físicas: Pelo largo / aspecto robusto, cara redondeada.</li>
+            <li>Personalidad: Tranquilo, afectuoso, sedentario; requiere cuidados constantes.</li>
+            <li>Fuente: <a href="https://www.purina.co.uk/find-a-pet/cat-breeds/persian">Purina — Persa</a></li>
+            <li>Años: 2000, 2006, 2012, 2018, 2024</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Himalayo</strong>
+          <ul>
+            <li>Características físicas: Pelo largo, patrón colorpoint similar al Persa.</li>
+            <li>Personalidad: Tranquilo, algo exigente en cuidados, cariñoso pero selectivo.</li>
+            <li>Fuente: <a href="https://tica.org/breed/himalayan/">TICA — Himalayo</a></li>
+          </ul>
+              <li>Fuente: <a href="https://tica.org/breed/himalayan/">TICA — Himalayo</a></li>
+              <li>Años: 2001, 2007, 2013, 2019, 2025</li>
+        <li>
+          <strong>Exótico de Pelo Corto</strong>
+          <ul>
+            <li>Características físicas: Pelo corto, cara de Persa, aspecto compacto.</li>
+            <li>Personalidad: Cariñoso, tranquilo, dependiente.</li>
+            <li>Fuente: <a href="https://www.hillspet.com/pet-care/our-pets/cat-breeds/exotic-shorthair">Hill's — Exótico de Pelo Corto</a></li>
+          </ul>
+              <li>Fuente: <a href="https://www.hillspet.com/pet-care/our-pets/cat-breeds/exotic-shorthair">Hill's — Exótico de Pelo Corto</a></li>
+              <li>Años: 2002, 2008, 2014, 2020, 2026</li>
+        <li>
+          <strong>Ragdoll</strong>
+          <ul>
+            <li>Características físicas: Ojos azules, cuerpo grande y musculoso.</li>
+            <li>Personalidad: Dócil, cariñoso, dependiente emocionalmente.</li>
+            <li>Fuente: <a href="https://www.royalcanin.com/mx/cats/breeds/ragdoll">Royal Canin — Ragdoll</a></li>
+          </ul>
+              <li>Fuente: <a href="https://www.royalcanin.com/mx/cats/breeds/ragdoll">Royal Canin — Ragdoll</a></li>
+              <li>Años: 2003, 2009, 2015, 2021, 2027</li>
+        <li>
+          <strong>Chartreux</strong>
+          <ul>
+            <li>Características físicas: Pelaje corto, cuerpo compacto y musculoso.</li>
+            <li>Personalidad: Callado, independiente, paciente, lealtad silenciosa.</li>
+            <li>Fuente: <a href="https://www.purina.co.uk/find-a-pet/cat-breeds/chartreux">Purina — Chartreux</a></li>
+          </ul>
+              <li>Fuente: <a href="https://www.purina.co.uk/find-a-pet/cat-breeds/chartreux">Purina — Chartreux</a></li>
+              <li>Años: 2004, 2010, 2016, 2022, 2028</li>
+        <li>
+          <strong>American Wirehair</strong>
+          <ul>
+            <li>Características físicas: Pelaje con textura 'wire', pelo corto.</li>
+            <li>Personalidad: Tranquilo, cariñoso, adaptable.</li>
+            <li>Fuente: <a href="https://tica.org/breed/american-wirehair/">TICA — American Wirehair</a></li>
+          </ul>
+              <li>Fuente: <a href="https://tica.org/breed/american-wirehair/">TICA — American Wirehair</a></li>
+              <li>Años: 2005, 2011, 2017, 2023, 2029</li>
+      </ul>
+    </section>
 
-      <h2>Las etiquetas crean jerarquía</h2>
+    <!-- Géminis -->
+    <section id="geminis">
+      <h2>♊ Géminis</h2>
+      <p>Razas asociadas: Siamés, Oriental de Pelo Corto, Oriental de Pelo Largo, Balinés, Tailandés, Tonkinés, Burmés.</p>
+      <ul>
+        <li>
+          <strong>Siamés</strong>
+          <ul>
+            <li>Características físicas: Corporal esbelto, punto color (colorpoint), pelaje corto.</li>
+            <li>Personalidad: Platicador, le gusta la compañía, muy inteligente, exige atención.</li>
+            <li>Fuente: <a href="https://www.hillspet.com/pet-care/our-pets/cat-breeds/siamese">Hill's — Siamés</a></li>
+            <li>Años: 2000, 2007, 2014, 2021, 2028</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Oriental de Pelo Corto</strong>
+          <ul>
+            <li>Características físicas: Similar al Siamés, pelaje corto y elegante.</li>
+            <li>Personalidad: Extremadamente activo, curioso, vocal.</li>
+            <li>Fuente: <a href="https://tica.org/breed/oriental-shorthair/">TICA — Oriental de Pelo Corto</a></li>
+            <li>Años: 2001, 2008, 2015, 2022, 2029</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Oriental de Pelo Largo</strong>
+          <ul>
+            <li>Características físicas: Versión de pelo largo del Oriental.</li>
+            <li>Personalidad: Sociable, cariñoso, necesita interacción constante.</li>
+            <li>Fuente: <a href="https://www.royalcanin.com/mx/cats/breeds/oriental">Royal Canin — Oriental de Pelo Largo</a></li>
+            <li>Años: 2002, 2009, 2016, 2023, 2030</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Balinés</strong>
+          <ul>
+            <li>Características físicas: Pelo semilargo, elegante.</li>
+            <li>Personalidad: Elegante, vocal aunque más suave que el Siamés, sociable.</li>
+            <li>Fuente: <a href="https://www.purina.co.uk/find-a-pet/cat-breeds/balinese">Purina — Balinés</a></li>
+            <li>Años: 2003, 2010, 2017, 2024, 2031</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Tailandés (Thai)</strong>
+          <ul>
+            <li>Características físicas: Similar al Siamés clásico.</li>
+            <li>Personalidad: Cariñoso, comunicativo, inteligente.</li>
+            <li>Fuente: <a href="https://www.hillspet.com/pet-care/our-pets/cat-breeds/thai">Hill's — Tailandés (Thai)</a></li>
+            <li>Años: 2004, 2011, 2018, 2025, 2032</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Tonkinés</strong>
+          <ul>
+            <li>Características físicas: Mezcla entre Siamés y Burmés, pelaje corto.</li>
+            <li>Personalidad: Energético, sociable.</li>
+            <li>Fuente: <a href="https://tica.org/breed/tonkinese/">TICA — Tonkinés</a></li>
+            <li>Años: 2005, 2012, 2019, 2026, 2033</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Burmés</strong>
+          <ul>
+            <li>Características físicas: Pelaje corto y brillante, cuerpo compacto.</li>
+            <li>Personalidad: Cariñoso, sigue a su humano por la casa.</li>
+            <li>Fuente: <a href="https://www.royalcanin.com/mx/cats/breeds/burmese">Royal Canin — Burmés</a></li>
+            <li>Años: 2006, 2013, 2020, 2027, 2034</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
 
-      <p>
-        Un h1 representa el título principal.
-        Un h2 identifica una sección.
-        Un h3 introduce un nivel secundario.
-      </p>
+    <!-- Cáncer -->
+    <section id="cancer">
+      <h2>♋ Cáncer</h2>
+      <p>Razas asociadas: Munchkin, Munchkin Pelo Largo, Minuet, Minuet Pelo Largo, Minuet Talls, Snowshoe, Nebelung.</p>
+      <ul>
+        <li>
+          <strong>Munchkin</strong>
+          <ul>
+            <li>Características físicas: Patas cortas, cuerpo compacto.</li>
+            <li>Personalidad: Juguetón, curioso, sociable y activo.</li>
+            <li>Fuente: <a href="https://www.purina.co.uk/find-a-pet/cat-breeds/munchkin">Purina — Munchkin</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Munchkin Pelo Largo</strong>
+          <ul>
+            <li>Características físicas: Variante de pelo largo del Munchkin.</li>
+            <li>Personalidad: Igual de juguetón y curioso.</li>
+            <li>Fuente: <a href="https://tica.org/breed/munchkin/">TICA — Munchkin Pelo Largo</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Minuet</strong>
+          <ul>
+            <li>Características físicas: Versión de patas cortas derivada del Munchkin.</li>
+            <li>Personalidad: Dulce, sociable, tranquilo.</li>
+            <li>Fuente: <a href="https://www.hillspet.com/pet-care/our-pets/cat-breeds/minuet">Hill's — Minuet</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Minuet Pelo Largo</strong>
+          <ul>
+            <li>Características físicas: Variante de pelo largo del Minuet.</li>
+            <li>Personalidad: Dulce y sociable.</li>
+            <li>Fuente: <a href="https://www.royalcanin.com/mx/cats/breeds/minuet">Royal Canin — Minuet Pelo Largo</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Minuet Talls</strong>
+          <ul>
+            <li>Características físicas: Patas de longitud estándar (variante Minuet).</li>
+            <li>Personalidad: Similar a las demás variantes: sociable y tranquila.</li>
+            <li>Fuente: <a href="https://www.purina.co.uk/find-a-pet/cat-breeds/minuet">Purina — Minuet Talls</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Snowshoe</strong>
+          <ul>
+            <li>Características físicas: Patrón 'point' con patas blancas.</li>
+            <li>Personalidad: Sociable, vocal, cariñoso.</li>
+            <li>Fuente: <a href="https://tica.org/breed/snowshoe/">TICA — Snowshoe</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Nebelung</strong>
+          <ul>
+            <li>Características físicas: Pelaje semilargo gris/azulado.</li>
+            <li>Personalidad: Tímido con extraños, muy leal y cariñoso con su familia.</li>
+            <li>Fuente: <a href="https://www.royalcanin.com/mx/cats/breeds/nebelung">Royal Canin — Nebelung</a></li>
+          </ul>
+        </li>
+      </ul>
+    </section>
 
+    <!-- Leo -->
+    <section id="leo">
+      <h2>♌ Leo</h2>
+      <p>Razas asociadas: Maine Coon, Maine Coon Polydactyl, Noruego de Bosque, Siberiano, Highlander, British Longhair, Turco Angora.</p>
+      <ul>
+        <li>
+          <strong>Maine Coon</strong>
+          <ul>
+            <li>Características físicas: Grande, pelaje semilargo, orejas con penachos.</li>
+            <li>Personalidad: Sociable, juguetón, independiente pero afectuoso.</li>
+            <li>Fuente: <a href="https://www.purina.co.uk/find-a-pet/cat-breeds/maine-coon">Purina — Maine Coon</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Maine Coon Polydactyl</strong>
+          <ul>
+            <li>Características físicas: Igual que Maine Coon con dedos adicionales en las patas.</li>
+            <li>Personalidad: Gentil y hábil.</li>
+            <li>Fuente: <a href="https://tica.org/breed/maine-coon/">TICA — Maine Coon Polydactyl</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Noruego de Bosque</strong>
+          <ul>
+            <li>Características físicas: Pelaje denso, gran tamaño, adaptado al frío.</li>
+            <li>Personalidad: Resistente, aventurero, buen trepador.</li>
+            <li>Fuente: <a href="https://www.royalcanin.com/mx/cats/breeds/norwegian-forest-cat">Royal Canin — Noruego de Bosque</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Siberiano</strong>
+          <ul>
+            <li>Características físicas: Pelaje espeso, corpulento y fuerte.</li>
+            <li>Personalidad: Leal, juguetón, atlético.</li>
+            <li>Fuente: <a href="https://www.hillspet.com/pet-care/our-pets/cat-breeds/siberian">Hill's — Siberiano</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Highlander</strong>
+          <ul>
+            <li>Características físicas: Aspecto robusto y orejas particulares (según variedad).</li>
+            <li>Personalidad: Juguetón, curioso, sociable.</li>
+            <li>Fuente: <a href="https://www.purina.co.uk/find-a-pet/cat-breeds/highlander">Purina — Highlander</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>British Longhair</strong>
+          <ul>
+            <li>Características físicas: Pelo largo, cuerpo compacto.</li>
+            <li>Personalidad: Sereno, afectuoso, independiente.</li>
+            <li>Fuente: <a href="https://tica.org/breed/british-longhair/">TICA — British Longhair</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Turco Angora</strong>
+          <ul>
+            <li>Características físicas: Pelaje sedoso, aspecto elegante.</li>
+            <li>Personalidad: Inteligente, activo, vocal y apegado.</li>
+            <li>Fuente: <a href="https://www.royalcanin.com/mx/cats/breeds/turkish-angora">Royal Canin — Turco Angora</a></li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Virgo -->
+    <section id="virgo">
+      <h2>♍ Virgo</h2>
+      <p>Razas asociadas: Abisinio, Ocicat, Singapura, Korat, Habana, Lykoi.</p>
+      <ul>
+        <li>
+          <strong>Abisinio</strong>
+          <ul>
+            <li>Características físicas: Pelaje corto, cuerpo ágil y elegante.</li>
+            <li>Personalidad: Activo, curioso, inteligente, necesita estimulación constante.</li>
+            <li>Fuente: <a href="https://www.hillspet.com/pet-care/our-pets/cat-breeds/abyssinian">Hill's — Abisinio</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Ocicat</strong>
+          <ul>
+            <li>Características físicas: Patrón atigrado de aspecto salvaje.</li>
+            <li>Personalidad: Sociable, inteligente, entrenable.</li>
+            <li>Fuente: <a href="https://tica.org/breed/ocicat/">TICA — Ocicat</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Singapura</strong>
+          <ul>
+            <li>Características físicas: Muy pequeña, pelaje corto.</li>
+            <li>Personalidad: Juguetón, extrovertido, sociable.</li>
+            <li>Fuente: <a href="https://www.royalcanin.com/mx/cats/breeds/singapura">Royal Canin — Singapura</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Korat</strong>
+          <ul>
+            <li>Características físicas: Pelaje corto y azulado, cuerpo compacto.</li>
+            <li>Personalidad: Sensible, observador, muy apegado a su humano.</li>
+            <li>Fuente: <a href="https://www.purina.co.uk/find-a-pet/cat-breeds/korat">Purina — Korat</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Habana (Havana Brown)</strong>
+          <ul>
+            <li>Características físicas: Pelaje corto y de color rico.</li>
+            <li>Personalidad: Curioso, sociable, afectuoso.</li>
+            <li>Fuente: <a href="https://tica.org/breed/havana-brown/">TICA — Habana (Havana Brown)</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Lykoi</strong>
+          <ul>
+            <li>Características físicas: Pelaje atípico, aspecto parcial 'lobo'.</li>
+            <li>Personalidad: Curioso, cauteloso al inicio, cariñoso una vez confía.</li>
+            <li>Fuente: <a href="https://www.hillspet.com/pet-care/our-pets/cat-breeds/lykoi">Hill's — Lykoi</a></li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Libra -->
+    <section id="libra">
+      <h2>♎ Libra</h2>
+      <p>Razas asociadas: Británico de Pelo Corto, Escocés Recto, Escocés Plegado, Birmilla, Burmilla, Burmilla Pelo Largo.</p>
+      <ul>
+        <li>
+          <strong>Británico de Pelo Corto</strong>
+          <ul>
+            <li>Características físicas: Pelaje corto, cuerpo robusto.</li>
+            <li>Personalidad: Tranquilo, afable, independiente.</li>
+            <li>Fuente: <a href="https://www.purina.co.uk/find-a-pet/cat-breeds/british-shorthair">Purina — Británico de Pelo Corto</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Escocés Recto</strong>
+          <ul>
+            <li>Características físicas: Orejas rectas, cuerpo compacto.</li>
+            <li>Personalidad: Tranquilo y dulce.</li>
+            <li>Fuente: <a href="https://tica.org/breed/scottish-fold/">TICA — Escocés Recto</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Escocés Plegado (Fold)</strong>
+          <ul>
+            <li>Características físicas: Orejas plegadas, aspecto dulce.</li>
+            <li>Personalidad: Tranquilo, adaptable, carácter dulce y reservado.</li>
+            <li>Fuente: <a href="https://www.royalcanin.com/mx/cats/breeds/scottish-fold">Royal Canin — Escocés Plegado</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Birmilla</strong>
+          <ul>
+            <li>Características físicas: Colorpoint suave, pelaje semilargo.</li>
+            <li>Personalidad: Dulce, curioso, más tranquilo que otras orientales.</li>
+            <li>Fuente: <a href="https://www.hillspet.com/pet-care/our-pets/cat-breeds/burmilla">Hill's — Birmilla</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Burmilla Pelo Largo</strong>
+          <ul>
+            <li>Características físicas: Variante de pelo largo.</li>
+            <li>Personalidad: Dulce y tranquilo.</li>
+            <li>Fuente: <a href="https://www.purina.co.uk/find-a-pet/cat-breeds/burmilla">Purina — Burmilla Pelo Largo</a></li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Escorpio -->
+    <section id="escorpio">
+      <h2>♏ Escorpio</h2>
+      <p>Razas asociadas: Bombay, Cymric, LaPerm, LaPerm Pelo Corto, Tennessee Rex, Pixiebob, Pixiebob Pelo Largo.</p>
+      <ul>
+        <li>
+          <strong>Bombay</strong>
+          <ul>
+            <li>Características físicas: Pelaje negro, aspecto elegante.</li>
+            <li>Personalidad: Sigiloso, afectuoso con su elegido, algo posesivo.</li>
+            <li>Fuente: <a href="https://tica.org/breed/bombay/">TICA — Bombay</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Cymric</strong>
+          <ul>
+            <li>Características físicas: Versión de pelo largo del Manx.</li>
+            <li>Personalidad: Juguetón, sociable.</li>
+            <li>Fuente: <a href="https://www.royalcanin.com/mx/cats/breeds/cymric">Royal Canin — Cymric</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>LaPerm</strong>
+          <ul>
+            <li>Características físicas: Pelaje rizado, textura única.</li>
+            <li>Personalidad: Cariñoso, curioso, sociable.</li>
+            <li>Fuente: <a href="https://www.purina.co.uk/find-a-pet/cat-breeds/laperm">Purina — LaPerm</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Tennessee Rex</strong>
+          <ul>
+            <li>Características físicas: Pelo rizado o atípico (documentación limitada).</li>
+            <li>Personalidad: Reportada como sociable y de trato fácil.</li>
+            <li>Fuente: <a href="https://www.hillspet.com/pet-care/our-pets/cat-breeds/tennessee-rex">Hill's — Tennessee Rex</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Pixiebob</strong>
+          <ul>
+            <li>Características físicas: Aspecto robusto, a veces con pelaje largo.</li>
+            <li>Personalidad: Leal, entrenable, comportamiento casi canino.</li>
+            <li>Fuente: <a href="https://tica.org/breed/pixiebob/">TICA — Pixiebob</a></li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Sagitario -->
+    <section id="sagitario">
+      <h2>♐ Sagitario</h2>
+      <p>Razas asociadas: Devon Rex, Cornish Rex, American Bobtail, American Bobtail Shorthair, Kurilian Bobtail, Kurilian Bobtail Pelo Largo.</p>
+      <ul>
+        <li>
+          <strong>Devon Rex</strong>
+          <ul>
+            <li>Características físicas: Pelaje rizado, cuerpo ligero.</li>
+            <li>Personalidad: Travieso, juguetón, extrovertido.</li>
+            <li>Fuente: <a href="https://www.hillspet.com/pet-care/our-pets/cat-breeds/devon-rex">Hill's — Devon Rex</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Cornish Rex</strong>
+          <ul>
+            <li>Características físicas: Pelaje rizado, aspecto atlético.</li>
+            <li>Personalidad: Hiperactivo, atlético, vinculado a su humano.</li>
+            <li>Fuente: <a href="https://tica.org/breed/cornish-rex/">TICA — Cornish Rex</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>American Bobtail</strong>
+          <ul>
+            <li>Características físicas: Cola corta o bobtail, cuerpo musculoso.</li>
+            <li>Personalidad: Inteligente, juguetón, adaptable.</li>
+            <li>Fuente: <a href="https://www.royalcanin.com/mx/cats/breeds/american-bobtail">Royal Canin — American Bobtail</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Kurilian Bobtail</strong>
+          <ul>
+            <li>Características físicas: Cola corta, constitución robusta.</li>
+            <li>Personalidad: Independiente, buen cazador.</li>
+            <li>Fuente: <a href="https://www.purina.co.uk/find-a-pet/cat-breeds/kurilian-bobtail">Purina — Kurilian Bobtail</a></li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Capricornio -->
+    <section id="capricornio">
+      <h2>♑ Capricornio</h2>
+      <p>Razas asociadas: Ruso Azul, American Shorthair, Manx, Manx Tailed, Peterbald, Donskoy.</p>
+      <ul>
+        <li>
+          <strong>Ruso Azul</strong>
+          <ul>
+            <li>Características físicas: Pelaje corto, color gris azulado.</li>
+            <li>Personalidad: Tímido con desconocidos, reservado pero fiel.</li>
+            <li>Fuente: <a href="https://tica.org/breed/russian-blue/">TICA — Ruso Azul</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>American Shorthair</strong>
+          <ul>
+            <li>Características físicas: Pelaje corto, cuerpo robusto.</li>
+            <li>Personalidad: Equilibrado, independiente, buen cazador.</li>
+            <li>Fuente: <a href="https://www.hillspet.com/pet-care/our-pets/cat-breeds/american-shorthair">Hill's — American Shorthair</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Manx</strong>
+          <ul>
+            <li>Características físicas: Ausencia de cola (o cola corta), cuerpo compacto.</li>
+            <li>Personalidad: Leal, juguetón.</li>
+            <li>Fuente: <a href="https://www.royalcanin.com/mx/cats/breeds/manx">Royal Canin — Manx</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Peterbald</strong>
+          <ul>
+            <li>Características físicas: Sin pelo o pelaje atípico.</li>
+            <li>Personalidad: Curioso, sociable, activo.</li>
+            <li>Fuente: <a href="https://www.purina.co.uk/find-a-pet/cat-breeds/peterbald">Purina — Peterbald</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Donskoy</strong>
+          <ul>
+            <li>Características físicas: Sin pelo, aspecto atípico.</li>
+            <li>Personalidad: Cariñoso, inteligente, sociable.</li>
+            <li>Fuente: <a href="https://tica.org/breed/donskoy/">TICA — Donskoy</a></li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Acuario -->
+    <section id="acuario">
+      <h2>♒ Acuario</h2>
+      <p>Razas asociadas: Turco Van, American Curl, American Curl Pelo Largo, Sphynx, Selkirk Rex, Selkirk Rex Pelo Largo.</p>
+      <ul>
+        <li>
+          <strong>Turco Van</strong>
+          <ul>
+            <li>Características físicas: Pelaje semilargo, a menudo con marcas en la cola y la cabeza.</li>
+            <li>Personalidad: Atípico, activo, le encanta el agua.</li>
+            <li>Fuente: <a href="https://www.royalcanin.com/mx/cats/breeds/turkish-van">Royal Canin — Turco Van</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>American Curl</strong>
+          <ul>
+            <li>Características físicas: Orejas en forma de rizo hacia atrás.</li>
+            <li>Personalidad: Afectuoso, juguetón, mantiene comportamiento juvenil.</li>
+            <li>Fuente: <a href="https://www.hillspet.com/pet-care/our-pets/cat-breeds/american-curl">Hill's — American Curl</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Sphynx</strong>
+          <ul>
+            <li>Características físicas: Sin pelo, piel expuesta.</li>
+            <li>Personalidad: Extremadamente afectuoso, exige atención.</li>
+            <li>Fuente: <a href="https://www.purina.co.uk/find-a-pet/cat-breeds/sphynx">Purina — Sphynx</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Selkirk Rex</strong>
+          <ul>
+            <li>Características físicas: Pelaje rizado, aspecto suave y esponjoso.</li>
+            <li>Personalidad: Tranquilo, paciente, tolerante.</li>
+            <li>Fuente: <a href="https://tica.org/breed/selkirk-rex/">TICA — Selkirk Rex</a></li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Piscis -->
+    <section id="piscis">
+      <h2>♓ Piscis</h2>
+      <p>Razas asociadas: Khaomanee, Cherubim, Japanese Bobtail, Japanese Bobtail Pelo Largo, Australian Mist, Toybob.</p>
+      <ul>
+        <li>
+          <strong>Khaomanee</strong>
+          <ul>
+            <li>Características físicas: Pelaje corto, aspecto ágil.</li>
+            <li>Personalidad: Alerta, curioso, muy vocal.</li>
+            <li>Fuente: <a href="https://www.hillspet.com/pet-care/our-pets/cat-breeds/khaomanee">Hill's — Khaomanee</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Cherubim</strong>
+          <ul>
+            <li>Características físicas: Raza en desarrollo (detalles pendientes).</li>
+            <li>Personalidad: Reportada como dócil y afectuosa.</li>
+            <li>Fuente: <a href="https://tica.org/breed/cherubim/">TICA — Cherubim</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Japanese Bobtail</strong>
+          <ul>
+            <li>Características físicas: Cola corta característica, pelaje variable.</li>
+            <li>Personalidad: Activo, vocal, sociable.</li>
+            <li>Fuente: <a href="https://www.royalcanin.com/mx/cats/breeds/japanese-bobtail">Royal Canin — Japanese Bobtail</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Australian Mist</strong>
+          <ul>
+            <li>Características físicas: Pelaje con patrón moteado suave.</li>
+            <li>Personalidad: Sociable, tolerante, buen carácter familiar.</li>
+            <li>Fuente: <a href="https://www.purina.co.uk/find-a-pet/cat-breeds/australian-mist">Purina — Australian Mist</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Toybob</strong>
+          <ul>
+            <li>Características físicas: Tamaño pequeño, aspecto compacto.</li>
+            <li>Personalidad: Sociable, cariñoso, personalidad grande en cuerpo pequeño.</li>
+            <li>Fuente: <a href="https://tica.org/breed/toybob/">TICA — Toybob</a></li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Clasificación popular (simplificada, al final de los signos) -->
+    <section id="clasificacion">
+      <h2>Tu tipo de gato (Clasificación popular)</h2>
+      <ul>
+        <li>
+          <strong>Tipo de michi:</strong> naranja — <strong>Características:</strong> juguetón, sociable, cariñoso
+        </li>
+        <li>
+          <strong>Tipo de michi:</strong> tuxedo (bicolor) — <strong>Características:</strong> equilibrado, adaptables, afectuoso
+        </li>
+        <li>
+          <strong>Tipo de michi:</strong> negro — <strong>Características:</strong> tranquilo, confiado, leal
+        </li>
+        <li>
+          <strong>Tipo de michi:</strong> tabby — <strong>Características:</strong> curioso, enérgico, instinto cazador
+        </li>
+        <li>
+          <strong>Tipo de michi:</strong> gris — <strong>Características:</strong> inteligente, reservado, leal
+        </li>
+        <li>
+          <strong>Tipo de michi:</strong> tricolor / carey — <strong>Características:</strong> independiente, enérgico, temperamental
+        </li>
+      </ul>
     </section>
 
   </main>
 
-  <!--
-    FOOTER
-    Contiene información de cierre o complementaria.
-  -->
   <footer>
-
-    <p>Guía de estudio · HTML + CSS</p>
-
+    <p>Fuentes generales: <a href="https://tica.org/ticas-breeds/browse-all-breeds/">TICA</a> · <a href="https://www.hillspet.com/pet-care-center?species=cat&category=breed">Hill's</a> · <a href="https://www.royalcanin.com/mx/cats/breeds">Royal Canin</a> · <a href="https://www.purina.co.uk/find-a-pet/cat-breeds">Purina</a></p>
+    <p>Documento generado a partir de <em>estructura-datos-gatos-horoscopo.md</em>.</p>
   </footer>
 
 </body>
