@@ -56,116 +56,6 @@ No existe base confiable para vincular sexo de la persona con raza de gato.
 - Signo zodiacal correspondiente
 - Breve explicación de por qué esa raza forma parte del ciclo
 
-### 1.1 Parte 1 — Interacción: fecha de nacimiento → signo → raza
-
-Esta parte define el recorrido interactivo que debe seguir la aplicación:
-
-1. Pedir la **fecha de nacimiento** al usuario (día, mes, año).
-2. Determinar el **signo zodiacal** a partir del día y el mes.
-3. (Opcional pero recomendado) Ajustar el **año** según la fecha del Año Nuevo chino si se quiere coherencia con la sección 3.1.
-4. Tomar la **lista de razas** asociada al signo (Sección 3) y calcular la posición dentro del ciclo usando el año.
-5. Mostrar la **raza resultado**, junto con sus datos (características, personalidad, fuentes) y el animal chino complementario si se desea.
-
-Tabla de rangos para los signos (día/mes):
-
-| Signo | Rango |
-|---|---|
-| Aries | 21 de marzo – 19 de abril |
-| Tauro | 20 de abril – 20 de mayo |
-| Géminis | 21 de mayo – 20 de junio |
-| Cáncer | 21 de junio – 22 de julio |
-| Leo | 23 de julio – 22 de agosto |
-| Virgo | 23 de agosto – 22 de septiembre |
-| Libra | 23 de septiembre – 22 de octubre |
-| Escorpio | 23 de octubre – 21 de noviembre |
-| Sagitario | 22 de noviembre – 21 de diciembre |
-| Capricornio | 22 de diciembre – 19 de enero |
-| Acuario | 20 de enero – 18 de febrero |
-| Piscis | 19 de febrero – 20 de marzo |
-
-Algoritmo (resumen):
-
-```
-entrada: fecha_nacimiento (día, mes, año)
-
-1. signo = getSign(día, mes)                          # usar los rangos de arriba
-2. año_ajustado = ajustarPorCNY(año, mes, día)        # opcional (ver Sección 3.1)
-3. lista_razas = RAZAS_POR_SIGNO[signo]               # lista de la Sección 3
-4. n = len(lista_razas)
-5. índice = (año_ajustado - AÑO_BASE) mod n          # AÑO_BASE = 2000 (ejemplo)
-6. raza_resultado = lista_razas[índice]
-
-salida: raza_resultado, posición_ciclo = índice+1
-```
-
-Notas:
-- `AÑO_BASE` es un año de referencia elegido para alinear ejemplos (en este documento usamos 2000). Cambiarlo altera los ejemplos, no la lógica.
-- Si se requiere usar el Año Nuevo chino para `año_ajustado`, aplicar la regla: si la fecha de nacimiento está antes de la fecha del CNY de ese año, restar 1 al año.
-
-Ejemplo rápido (sin ajuste CNY):
-- Fecha: 14/04/1995 → Signo: Aries (21 mar–19 abr)
-- Lista Aries (7 razas), AÑO_BASE=2000 → n = 7
-- índice = (1995 - 2000) mod 7 = (-5) mod 7 = 2  → posición 3
-- Raza resultado = la tercera raza de Aries (según Sección 3, p. ej. Savannah)
-
-Snippet de formulario HTML + JS (ejemplo mínimo para prototipo):
-
-```html
-<!-- Formulario simple -->
-<form id="birthform">
-        <label>Fecha de nacimiento: <input type="date" id="bdate" required></label>
-        <button type="button" id="calc">Calcular mi michi</button>
-</form>
-<div id="resultado"></div>
-
-<script>
-const RAZAS_POR_SIGNO = {
-        'Aries': ['Bengalí','Bengalí de Pelo Largo','Savannah','Toyger','Egyptian Mau','Chausie','Serengeti'],
-        /* completar con las demás listas desde la Sección 3 */
-};
-const AÑO_BASE = 2000;
-
-function getSign(d){
-        const m = d.getMonth()+1; // 1-12
-        const day = d.getDate();
-        // Rangos simplificados
-        if ((m==3 && day>=21) || (m==4 && day<=19)) return 'Aries';
-        if ((m==4 && day>=20) || (m==5 && day<=20)) return 'Tauro';
-        if ((m==5 && day>=21) || (m==6 && day<=20)) return 'Géminis';
-        if ((m==6 && day>=21) || (m==7 && day<=22)) return 'Cáncer';
-        if ((m==7 && day>=23) || (m==8 && day<=22)) return 'Leo';
-        if ((m==8 && day>=23) || (m==9 && day<=22)) return 'Virgo';
-        if ((m==9 && day>=23) || (m==10 && day<=22)) return 'Libra';
-        if ((m==10 && day>=23) || (m==11 && day<=21)) return 'Escorpio';
-        if ((m==11 && day>=22) || (m==12 && day<=21)) return 'Sagitario';
-        if ((m==12 && day>=22) || (m==1 && day<=19)) return 'Capricornio';
-        if ((m==1 && day>=20) || (m==2 && day<=18)) return 'Acuario';
-        return 'Piscis';
-}
-
-document.getElementById('calc').addEventListener('click',()=>{
-        const v = document.getElementById('bdate').value;
-        if(!v){ document.getElementById('resultado').innerText='Indica tu fecha'; return; }
-        const d = new Date(v);
-        const signo = getSign(d);
-        const año = d.getFullYear();
-        // Para prototipo omitimos ajuste CNY; para producción usar ajustarPorCNY
-        const lista = RAZAS_POR_SIGNO[signo] || [];
-        const n = lista.length || 1;
-        const idx = ((año - AÑO_BASE) % n + n) % n; // módulo positivo
-        const raza = lista[idx] || '—';
-        document.getElementById('resultado').innerHTML = `<strong>Signo:</strong> ${signo}<br><strong>Raza:</strong> ${raza} <small>(posición ${idx+1} de ${n})</small>`;
-});
-</script>
-```
-
-Dónde mejorar para producción:
-- Implementar `ajustarPorCNY(año, mes, día)` usando la tabla de Sección 3.1 o una API de fechas de Año Nuevo chino.
-- Completar `RAZAS_POR_SIGNO` con todas las listas de la Sección 3 (los slugs en Sección 4 pueden mapearse aquí).
-- Añadir validaciones, internacionalización y enlaces directos a las fichas de raza.
-
-Esta sección deja documentado el camino solicitado: pedir fecha → ligar a signo → usar año para seleccionar la raza dentro del ciclo del signo, y ofrece un ejemplo ejecutable mínimo para prototipado rápido.
-
 ---
 
 ## 2. Ciclo de razas por año de nacimiento
@@ -214,178 +104,6 @@ combinaciones.
 | ♓ Piscis | Khaomanee, Cherubim, Japanese Bobtail, Japanese Bobtail Pelo Largo, Australian Mist, Toybob |
 
 ---
-
-## 3.2 Ciclos por signo (mapa de posiciones → años)
-
-Para poder vincular un **año de nacimiento** con una raza dentro del ciclo de cada signo, proponemos el siguiente método de trabajo (editable según requerimientos del producto):
-
-- Elegir un **año de referencia** por signo (por simplicidad aquí usamos el año 2000 como posición 1 para todos los signos en los ejemplos). 
-- Cada ciclo tiene longitud igual al número de razas listadas para ese signo (6 o 7). Los años se repiten cada N años, donde N = longitud del ciclo del signo.
-- Las columnas "Años ejemplo" contienen años de ejemplo separados por la longitud del ciclo; cada año enlaza a la subsección del signo correspondiente en este documento.
-
-<a id="aries"></a>
-### ♈ Aries — Ciclo (7 razas)
-| Pos | Raza |
-|---:|---|
-| 1 | Bengalí |
-| 2 | Bengalí de Pelo Largo |
-| 3 | Savannah |
-| 4 | Toyger |
-| 5 | Egyptian Mau |
-| 6 | Chausie |
-| 7 | Serengeti |
-
-Años ejemplo (cada 7 años): [2000](#aries), [2007](#aries), [2014](#aries), [2021](#aries), [2028](#aries)
-
-<a id="tauro"></a>
-### ♉ Tauro — Ciclo (6 razas)
-| Pos | Raza |
-|---:|---|
-| 1 | Persa |
-| 2 | Himalayo |
-| 3 | Exótico de Pelo Corto |
-| 4 | Ragdoll |
-| 5 | Chartreux |
-| 6 | American Wirehair |
-
-Años ejemplo (cada 6 años): [2000](#tauro), [2006](#tauro), [2012](#tauro), [2018](#tauro), [2024](#tauro)
-
-<a id="geminis"></a>
-### ♊ Géminis — Ciclo (7 razas)
-| Pos | Raza |
-|---:|---|
-| 1 | Siamés |
-| 2 | Oriental de Pelo Corto |
-| 3 | Oriental de Pelo Largo |
-| 4 | Balinés |
-| 5 | Tailandés (Thai) |
-| 6 | Tonkinés |
-| 7 | Burmés |
-
-Años ejemplo (cada 7 años): [2000](#geminis), [2007](#geminis), [2014](#geminis), [2021](#geminis), [2028](#geminis)
-
-<a id="cancer"></a>
-### ♋ Cáncer — Ciclo (7 razas)
-| Pos | Raza |
-|---:|---|
-| 1 | Munchkin |
-| 2 | Munchkin Pelo Largo |
-| 3 | Minuet |
-| 4 | Minuet Pelo Largo |
-| 5 | Minuet Talls |
-| 6 | Snowshoe |
-| 7 | Nebelung |
-
-Años ejemplo (cada 7 años): [2000](#cancer), [2007](#cancer), [2014](#cancer), [2021](#cancer), [2028](#cancer)
-
-<a id="leo"></a>
-### ♌ Leo — Ciclo (7 razas)
-| Pos | Raza |
-|---:|---|
-| 1 | Maine Coon |
-| 2 | Maine Coon Polydactyl |
-| 3 | Noruego de Bosque |
-| 4 | Siberiano |
-| 5 | Highlander |
-| 6 | British Longhair |
-| 7 | Turco Angora |
-
-Años ejemplo (cada 7 años): [2000](#leo), [2007](#leo), [2014](#leo), [2021](#leo), [2028](#leo)
-
-<a id="virgo"></a>
-### ♍ Virgo — Ciclo (6 razas)
-| Pos | Raza |
-|---:|---|
-| 1 | Abisinio |
-| 2 | Ocicat |
-| 3 | Singapura |
-| 4 | Korat |
-| 5 | Habana |
-| 6 | Lykoi |
-
-Años ejemplo (cada 6 años): [2000](#virgo), [2006](#virgo), [2012](#virgo), [2018](#virgo), [2024](#virgo)
-
-<a id="libra"></a>
-### ♎ Libra — Ciclo (6 razas)
-| Pos | Raza |
-|---:|---|
-| 1 | Británico de Pelo Corto |
-| 2 | Escocés Recto |
-| 3 | Escocés Plegado |
-| 4 | Birmilla |
-| 5 | Burmilla |
-| 6 | Burmilla Pelo Largo |
-
-Años ejemplo (cada 6 años): [2000](#libra), [2006](#libra), [2012](#libra), [2018](#libra), [2024](#libra)
-
-<a id="escorpio"></a>
-### ♏ Escorpio — Ciclo (7 razas)
-| Pos | Raza |
-|---:|---|
-| 1 | Bombay |
-| 2 | Cymric |
-| 3 | LaPerm |
-| 4 | LaPerm Pelo Corto |
-| 5 | Tennessee Rex |
-| 6 | Pixiebob |
-| 7 | Pixiebob Pelo Largo |
-
-Años ejemplo (cada 7 años): [2000](#escorpio), [2007](#escorpio), [2014](#escorpio), [2021](#escorpio), [2028](#escorpio)
-
-<a id="sagitario"></a>
-### ♐ Sagitario — Ciclo (6 razas)
-| Pos | Raza |
-|---:|---|
-| 1 | Devon Rex |
-| 2 | Cornish Rex |
-| 3 | American Bobtail |
-| 4 | American Bobtail Shorthair |
-| 5 | Kurilian Bobtail |
-| 6 | Kurilian Bobtail Pelo Largo |
-
-Años ejemplo (cada 6 años): [2000](#sagitario), [2006](#sagitario), [2012](#sagitario), [2018](#sagitario), [2024](#sagitario)
-
-<a id="capricornio"></a>
-### ♑ Capricornio — Ciclo (6 razas)
-| Pos | Raza |
-|---:|---|
-| 1 | Ruso Azul |
-| 2 | American Shorthair |
-| 3 | Manx |
-| 4 | Manx Tailed |
-| 5 | Peterbald |
-| 6 | Donskoy |
-
-Años ejemplo (cada 6 años): [2000](#capricornio), [2006](#capricornio), [2012](#capricornio), [2018](#capricornio), [2024](#capricornio)
-
-<a id="acuario"></a>
-### ♒ Acuario — Ciclo (6 razas)
-| Pos | Raza |
-|---:|---|
-| 1 | Turco Van |
-| 2 | American Curl |
-| 3 | American Curl Pelo Largo |
-| 4 | Sphynx |
-| 5 | Selkirk Rex |
-| 6 | Selkirk Rex Pelo Largo |
-
-Años ejemplo (cada 6 años): [2000](#acuario), [2006](#acuario), [2012](#acuario), [2018](#acuario), [2024](#acuario)
-
-<a id="piscis"></a>
-### ♓ Piscis — Ciclo (6 razas)
-| Pos | Raza |
-|---:|---|
-| 1 | Khaomanee |
-| 2 | Cherubim |
-| 3 | Japanese Bobtail |
-| 4 | Japanese Bobtail Pelo Largo |
-| 5 | Australian Mist |
-| 6 | Toybob |
-
-Años ejemplo (cada 6 years): [2000](#piscis), [2006](#piscis), [2012](#piscis), [2018](#piscis), [2024](#piscis)
-
----
-
 
 ---
 
@@ -762,7 +480,7 @@ cual o resumir en la ficha final).
 | id | Nombre | Personalidad |
 |---|---|---|
 | bombay | Bombay | Sigiloso, afectuoso con su elegido, algo posesivo, disfruta la atención en sus propios términos |
-| burmilla | Burmilla | Dulce, curioso, tranquilo |
+| burmilla | Burmilla | (Ver arriba) dulce, curioso, tranquilo |
 | burmilla-pelo-largo | Burmilla Pelo Largo | Mismo temperamento dulce |
 | australian-mist | Australian Mist | Sociable, tolerante, buen carácter familiar, se adapta bien a la vida en interiores |
 | khaomanee | Khaomanee | Alerta, curioso, muy vocal, considerado de "buena suerte" en Tailandia |
@@ -821,16 +539,18 @@ exacto de combinaciones de respuestas → los 7 resultados posibles
 
 ## 7. Media naranja gatuna (lógica de cruce)
 
-**Inputs:** Raza de nacimiento (Sección 2) + Signo (Sección 3) + Clasificación
-popular (Sección 5)
+**Inputs:** Raza de signo (Secciones 3 y 3.1) + Clasificación popular / patrón
+(Sección 5)
 
 **Output:** una raza "compatible" de la Sección 4, distinta a la raza de
-nacimiento, que se presenta como la "media naranja gatuna" del usuario.
+signo, que se presenta como la "media naranja gatuna" del usuario — es decir,
+la raza que mejor **convivería** con la raza que ya le tocó, no una raza
+elegida por afinidad con la personalidad humana del usuario.
 
-`[PENDIENTE]`: falta definir la tabla/algoritmo de cruce exacto (p. ej. una
-matriz de compatibilidad por clasificación popular × elemento del signo,
-o un sistema de puntos). Este documento deja la base de datos lista para
-que esa lógica se construya sobre ella.
+**Decisión resuelta:** el algoritmo de cruce completo (clasificación de las
+77 razas en 4 perfiles de temperamento, compatibilidad entre perfiles, y el
+pseudocódigo de combinación signo + patrón) está desarrollado en la
+**Sección 11 — Tu gato ideal**.
 
 ---
 
@@ -906,3 +626,230 @@ de estructura del sitio, y (b) catálogo de razas y patrones ya redactado
 por el usuario. No se inventaron ni sustituyeron razas o descripciones de
 personalidad — todo el contenido de las Secciones 4 y 5 proviene
 directamente del documento original del usuario.*
+
+---
+
+## 11. Tu gato ideal — compañero felino según signo + patrón
+
+Esta sección responde a la pregunta final del recorrido: dado el resultado de tu
+**signo** (Secciones 3 y 3.1) y el resultado de tu **patrón/clasificación popular**
+(Sección 5), ¿qué raza sería tu compañero felino ideal? **Importante: esto no busca
+una raza que combine con la personalidad de una persona, sino una raza de gato que
+conviviría bien con la raza de gato que ya te tocó** — es compatibilidad entre gatos,
+no entre un gato y un humano.
+
+### 11.1 Principio de compatibilidad entre razas
+Guías de crianza y comportamiento felino (consultadas en fuentes especializadas en
+convivencia multi-gato) coinciden en un principio general: **la compatibilidad entre
+razas depende más del nivel de energía y de la necesidad de interacción que de
+cualquier otro factor**. Dos gatos muy activos suelen llevarse mejor entre sí que un
+gato muy activo con uno plácido que prefiere la soledad; dos gatos independientes
+toleran bien la distancia mutua sin conflicto; y los gatos que buscan cercanía
+constante (ya sea vocal o físicamente) tienden a reforzarse entre ellos. Bajo ese
+principio se construyó la clasificación siguiente.
+
+### 11.2 Los 4 perfiles de temperamento
+
+| Perfil | Descripción | Compatible con |
+|---|---|---|
+| **A — Activo / Enérgico** | Necesita juego y estímulo constante, alto nivel de actividad física | Otro perfil A |
+| **B — Sociable / Vocal** | Extrovertido, busca interacción constante (con humanos u otros gatos) | Perfil B o D |
+| **C — Tranquilo / Independiente** | Bajo nivel de exigencia, cómodo con la distancia y la calma | Otro perfil C |
+| **D — Cariñoso / Dependiente** | Necesita cercanía y contacto físico/emocional constante | Perfil D o B |
+
+*(Los perfiles B y D se combinan bien entre sí porque ambos giran en torno a la
+necesidad de cercanía — uno la expresa de forma más vocal/social, el otro de forma
+más física/afectiva.)*
+
+### 11.3 Clasificación de las 77 razas por perfil de temperamento
+
+*(Clasificación derivada de las características ya documentadas en la Sección 4,
+agrupadas según el principio de la Sección 11.1 — no son datos nuevos, es una
+re-organización de la personalidad ya descrita por raza.)*
+
+**Razas "clásicas" de pelo corto**
+
+| Raza | Perfil |
+|---|---|
+| Abisinio | A — Activo / Enérgico |
+| American Shorthair | C — Tranquilo / Independiente |
+| American Wirehair | C — Tranquilo / Independiente |
+| Británico de Pelo Corto | C — Tranquilo / Independiente |
+| Chartreux | C — Tranquilo / Independiente |
+| Egyptian Mau (Mau Egipcio) | A — Activo / Enérgico |
+| Ruso Azul | C — Tranquilo / Independiente |
+| Korat | D — Cariñoso / Dependiente |
+| Habana (Havana Brown) | B — Sociable / Vocal |
+| Singapura | A — Activo / Enérgico |
+
+**Razas orientales / vocales**
+
+| Raza | Perfil |
+|---|---|
+| Siamés | B — Sociable / Vocal |
+| Oriental de Pelo Corto | B — Sociable / Vocal |
+| Oriental de Pelo Largo | B — Sociable / Vocal |
+| Balinés | B — Sociable / Vocal |
+| Tailandés (Thai) | D — Cariñoso / Dependiente |
+| Tonkinés | B — Sociable / Vocal |
+| Burmés | D — Cariñoso / Dependiente |
+| Birmilla | D — Cariñoso / Dependiente |
+
+**Razas grandes / "gentle giants"**
+
+| Raza | Perfil |
+|---|---|
+| Maine Coon | B — Sociable / Vocal |
+| Maine Coon Polydactyl | B — Sociable / Vocal |
+| Noruego de Bosque | A — Activo / Enérgico |
+| Siberiano | B — Sociable / Vocal |
+| Ragdoll | D — Cariñoso / Dependiente |
+| Chausie | A — Activo / Enérgico |
+| Highlander | A — Activo / Enérgico |
+
+**Razas exóticas con patrón salvaje**
+
+| Raza | Perfil |
+|---|---|
+| Bengalí | A — Activo / Enérgico |
+| Bengalí de Pelo Largo | A — Activo / Enérgico |
+| Savannah | A — Activo / Enérgico |
+| Ocicat | B — Sociable / Vocal |
+| Toyger | B — Sociable / Vocal |
+| Serengeti | A — Activo / Enérgico |
+
+**Razas de pelo largo / semi-largo**
+
+| Raza | Perfil |
+|---|---|
+| Persa | C — Tranquilo / Independiente |
+| Himalayo | C — Tranquilo / Independiente |
+| Exótico de Pelo Corto | D — Cariñoso / Dependiente |
+| British Longhair | C — Tranquilo / Independiente |
+| Turco Angora | B — Sociable / Vocal |
+| Turco Van | A — Activo / Enérgico |
+| Nebelung | D — Cariñoso / Dependiente |
+| Cymric | A — Activo / Enérgico |
+
+**Razas sin pelo o con pelaje atípico**
+
+| Raza | Perfil |
+|---|---|
+| Sphynx | D — Cariñoso / Dependiente |
+| Donskoy | D — Cariñoso / Dependiente |
+| Peterbald | B — Sociable / Vocal |
+| Lykoi | C — Tranquilo / Independiente |
+
+**Razas de pelo rizado (Rex)**
+
+| Raza | Perfil |
+|---|---|
+| Devon Rex | A — Activo / Enérgico |
+| Cornish Rex | A — Activo / Enérgico |
+| Selkirk Rex | C — Tranquilo / Independiente |
+| Selkirk Rex Pelo Largo | C — Tranquilo / Independiente |
+| LaPerm | D — Cariñoso / Dependiente |
+| LaPerm Pelo Corto | D — Cariñoso / Dependiente |
+| Tennessee Rex | B — Sociable / Vocal |
+
+**Razas de orejas/cola distintiva**
+
+| Raza | Perfil |
+|---|---|
+| Escocés Plegado (Scottish Fold) | C — Tranquilo / Independiente |
+| Escocés Recto (Scottish Straight) | C — Tranquilo / Independiente |
+| American Curl | D — Cariñoso / Dependiente |
+| American Curl Pelo Largo | D — Cariñoso / Dependiente |
+| Manx | B — Sociable / Vocal |
+| Manx Tailed | B — Sociable / Vocal |
+| Japanese Bobtail | B — Sociable / Vocal |
+| Japanese Bobtail Pelo Largo | B — Sociable / Vocal |
+| American Bobtail | B — Sociable / Vocal |
+| American Bobtail Shorthair | B — Sociable / Vocal |
+| Kurilian Bobtail | C — Tranquilo / Independiente |
+| Kurilian Bobtail Pelo Largo | C — Tranquilo / Independiente |
+| Pixiebob | D — Cariñoso / Dependiente |
+| Pixiebob Pelo Largo | D — Cariñoso / Dependiente |
+| Toybob | D — Cariñoso / Dependiente |
+
+**Razas de patas cortas**
+
+| Raza | Perfil |
+|---|---|
+| Munchkin | A — Activo / Enérgico |
+| Munchkin Pelo Largo | A — Activo / Enérgico |
+| Minuet | D — Cariñoso / Dependiente |
+| Minuet Pelo Largo | D — Cariñoso / Dependiente |
+| Minuet Talls | D — Cariñoso / Dependiente |
+
+**Otras razas notables**
+
+| Raza | Perfil |
+|---|---|
+| Bombay | D — Cariñoso / Dependiente |
+| Burmilla | C — Tranquilo / Independiente |
+| Burmilla Pelo Largo | C — Tranquilo / Independiente |
+| Australian Mist | B — Sociable / Vocal |
+| Khaomanee | B — Sociable / Vocal |
+| Cherubim | D — Cariñoso / Dependiente |
+| Snowshoe | B — Sociable / Vocal |
+
+### 11.4 Perfil y compañero ideal por patrón/clasificación popular
+
+Cada resultado del test de personalidad (Sección 5) tiene un perfil de temperamento
+dominante. El compañero ideal se elige entre razas del mismo perfil (o del perfil
+compatible, según la tabla 11.2).
+
+**Gato naranja** — Perfil dominante: **B (Sociable / Vocal)**
+*sociable, cariñoso, extrovertido y juguetón — busca constantemente interacción.*
+Compañero ideal: razas de perfil B/D. Ejemplos: Korat, Habana (Havana Brown), Siamés, entre otras del mismo perfil (ver tabla 11.3).
+
+**Gato blanco** — Perfil dominante: **C (Tranquilo / Independiente)**
+*reservado, tranquilo y sensible a su entorno — valora la calma más que la compañía constante.*
+Compañero ideal: razas de perfil C. Ejemplos: American Shorthair, American Wirehair, Británico de Pelo Corto, entre otras del mismo perfil (ver tabla 11.3).
+
+**Gato negro** — Perfil dominante: **C (Tranquilo / Independiente)**
+*equilibrado y adaptable, tranquilo y seguro de sí mismo — cómodo tanto solo como acompañado.*
+Compañero ideal: razas de perfil C. Ejemplos: American Shorthair, American Wirehair, Británico de Pelo Corto, entre otras del mismo perfil (ver tabla 11.3).
+
+**Gato Tabby** — Perfil dominante: **A (Activo / Enérgico)**
+*enérgico, curioso y con fuerte instinto cazador — necesita estímulo y movimiento constante.*
+Compañero ideal: razas de perfil A. Ejemplos: Abisinio, Egyptian Mau (Mau Egipcio), Singapura, entre otras del mismo perfil (ver tabla 11.3).
+
+**Gato gris** — Perfil dominante: **D (Cariñoso / Dependiente)**
+*inicialmente reservado, pero profundamente leal y cariñoso una vez que confía.*
+Compañero ideal: razas de perfil D/B. Ejemplos: Korat, Habana (Havana Brown), Siamés, entre otras del mismo perfil (ver tabla 11.3).
+
+**Gato bicolor** — Perfil dominante: **B (Sociable / Vocal)**
+*juguetón, sociable, con un equilibrio entre independencia y cariño.*
+Compañero ideal: razas de perfil B/D. Ejemplos: Korat, Habana (Havana Brown), Siamés, entre otras del mismo perfil (ver tabla 11.3).
+
+**Gato tricolor o carey** — Perfil dominante: **A (Activo / Enérgico)**
+*independiente pero enérgico, con un carácter aventurero y a veces temperamental.*
+Compañero ideal: razas de perfil A. Ejemplos: Abisinio, Egyptian Mau (Mau Egipcio), Singapura, entre otras del mismo perfil (ver tabla 11.3).
+
+### 11.5 Cómo se combina con el signo (algoritmo)
+
+```
+entrada: raza_de_signo (Sección 3.1), patrón_resultado (Sección 5)
+
+1. perfil_signo   = CLUSTER[raza_de_signo]        # tabla 11.3
+2. perfil_patron  = CLUSTER_PATRON[patrón_resultado]  # tabla 11.4
+3. si perfil_signo == perfil_patron:
+       perfil_objetivo = perfil_signo   # ambos coinciden, resultado reforzado
+   si no:
+       perfil_objetivo = perfil_patron  # el patrón (test de personalidad) tiene prioridad,
+                                        # porque refleja cómo la persona se describe a sí misma,
+                                        # no solo su fecha de nacimiento
+4. compañero_ideal = raza aleatoria (o la más afín) dentro de COMPATIBLE[perfil_objetivo],
+                     excluyendo la raza_de_signo para evitar repetir el mismo resultado
+
+salida: compañero_ideal
+```
+
+**Nota:** cuando el perfil del signo y el del patrón coinciden, se puede mostrar un
+mensaje reforzado (ej. "tu gato de nacimiento y tu personalidad apuntan al mismo tipo
+de energía — tu media naranja gatuna comparte ese mismo ritmo"). Cuando difieren, el
+mensaje puede explicar el contraste (ej. "tu gato de nacimiento es tranquilo, pero tu
+personalidad de test es más activa — tu compañero ideal necesita seguirte el paso a ti,
+no a tu gato de nacimiento").

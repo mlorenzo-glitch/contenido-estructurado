@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Michis Astrales — Identidad</title>
+  <link rel="icon" href="favicon.ico" />
+  <link rel="stylesheet" href="https://use.typekit.net/qzj8zld.css" />
+  <style>
+    :root {
+      --bg: #f4f2ee;
+      --panel: #ffffff;
+      --paper: #faf7f2;
+      --text: #171717;
+      --muted: #4a4a4a;
+      --line: #e7e1d8;
+      --dark: #171717;
+      --shadow: 0 18px 40px rgba(23, 23, 23, 0.12);
+      --soft: #f0ece6;
+      --gold: #dcc3a3;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Tenon', system-ui, Arial, Helvetica, sans-serif;
+    }
+
+    main {
+      width: min(1100px, calc(100% - 32px));
+      margin: 40px auto 64px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-family: 'neulis-cursive', 'Tenon', system-ui, Arial, Helvetica, sans-serif;
+      font-size: clamp(2.7rem, 5vw, 5rem);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+    }
+
+    .section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 28px 26px;
+      margin-bottom: 26px;
+    }
+
+    .section-title {
+      margin: 0 0 18px;
+      font-size: clamp(1.35rem, 2vw, 2rem);
+      font-family: 'neulis-cursive', 'Tenon', system-ui, Arial, Helvetica, sans-serif;
+    }
+
+    .breed-card {
+      display: grid;
+      grid-template-columns: minmax(220px, 360px) minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .breed-card img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: #f7f3ef;
+      display: block;
+    }
+
+    .breed-copy h2 {
+      margin: 0 0 12px;
+      font-family: 'neulis-cursive', 'Tenon', system-ui, Arial, Helvetica, sans-serif;
+      font-size: clamp(2rem, 3vw, 2.9rem);
+      line-height: 1;
+    }
+
+    .meta-block {
+      margin-top: 18px;
+      padding: 12px 0 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .meta-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 800;
+      font-size: 1.05rem;
+    }
+
+    .meta-value {
+      margin: 0;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .meta-value a {
+      color: var(--text);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+    }
+
+    .result-card {
+      padding: 18px 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(180deg, #fff 0%, var(--paper) 100%);
+      text-align: center;
+    }
+
+    .result-card .badge {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--soft);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .result-card .percent {
+      font-size: clamp(1.7rem, 2vw, 2.4rem);
+      font-weight: 800;
+      margin-bottom: 10px;
+      line-height: 1;
+    }
+
+    .result-card p {
+      margin: 0;
+      line-height: 1.6;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .final-card {
+      padding: 22px 18px 8px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: linear-gradient(180deg, #fff 0%, #f9f5f0 100%);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.04);
+    }
+
+    .final-card-inner {
+      display: grid;
+      gap: 12px;
+    }
+
+    .summary-item {
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #faf7f2;
+    }
+
+    .summary-item strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .card-item {
+      padding: 14px 12px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #faf7f2;
+      text-align: center;
+    }
+
+    .card-item .type {
+      display: block;
+      font-weight: 800;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .card-item .percent {
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    .empty {
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    @media (max-width: 720px) {
+      .breed-card {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 22px 18px;
+      }
+    }
+
+    .profile-fab {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 52px;
+      height: 52px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 8px 24px rgba(23, 23, 23, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 30;
+    }
+
+    .profile-fab svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--text);
+    }
+
+    .home-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 52px;
+      height: 52px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 8px 24px rgba(23, 23, 23, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 30;
+      text-decoration: none;
+    }
+
+    .home-btn svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--text);
+    }
+
+    .profile-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: min(360px, calc(100vw - 24px));
+      height: 100vh;
+      background: #fff;
+      border-left: 1px solid var(--line);
+      box-shadow: -18px 0 36px rgba(23, 23, 23, 0.12);
+      transform: translateX(110%);
+      transition: transform 0.22s ease;
+      z-index: 40;
+      padding: 24px 20px 20px;
+    }
+
+    .profile-panel.visible {
+      transform: translateX(0);
+    }
+
+    .profile-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .profile-panel-title {
+      margin: 0;
+      font-family: 'neulis-cursive', 'Tenon', system-ui, Arial, Helvetica, sans-serif;
+      font-size: 2rem;
+    }
+
+    .close-panel {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--text);
+      width: 34px;
+      height: 34px;
+      padding: 0;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .profile-field {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+    }
+
+    .profile-field-label {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .profile-field-value {
+      margin: 0;
+      font-size: 1.05rem;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    .logout-btn {
+      width: 100%;
+      margin-top: 10px;
+      border: none;
+      border-radius: 999px;
+      background: var(--dark);
+      color: #fff;
+      padding: 0.9rem 1.2rem;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <a href="home.html" class="home-btn" aria-label="Volver a home">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 3.2l8.5 7.2h-2.6V20h-5.1v-5.2H11.2V20H6.1v-9.6H3.5L12 3.2zm0 2.6L6.6 9.8H8v8.5h2.8v-5.2h2.4v5.2H16v-8.5h1.4L12 5.8z"/>
+    </svg>
+  </a>
+
+  <button id="profile-fab" class="profile-fab" type="button" aria-label="Abrir perfil">
+    <svg viewBox="0 0 64 64" aria-hidden="true">
+      <path d="M30.2 9.7c-3.6 0-6.5 2.9-6.5 6.5 0 2.6 1.5 4.8 3.8 5.8-7 2.5-12 9.4-12 17.5 0 1.7 1.4 3.1 3.1 3.1h31.3c1.7 0 3.1-1.4 3.1-3.1 0-8.1-5-15-12-17.5 2.3-1 3.8-3.2 3.8-5.8 0-3.6-2.9-6.5-6.5-6.5-2.1 0-4 1-5.2 2.6-1.2-1.6-3.1-2.6-5.2-2.6Zm7.9 10.5c0 2.8-2.3 5-5.1 5-2.8 0-5.1-2.2-5.1-5 0-2.8 2.3-5 5.1-5s5.1 2.2 5.1 5Zm-16.5 16.1c1.5-4.4 5.7-7.6 10.7-7.6s9.2 3.2 10.7 7.6H21.6Z"/>
+    </svg>
+  </button>
+
+  <aside id="profile-panel" class="profile-panel" aria-live="polite">
+    <div class="profile-panel-header">
+      <h2 class="profile-panel-title">Mi perfil</h2>
+      <button id="close-panel" class="close-panel" type="button" aria-label="Cerrar panel">×</button>
+    </div>
+
+    <div class="profile-field">
+      <span class="profile-field-label">Correo</span>
+      <p id="profile-email" class="profile-field-value">—</p>
+    </div>
+
+    <div class="profile-field">
+      <span class="profile-field-label">Raza de gato</span>
+      <p id="profile-breed" class="profile-field-value">—</p>
+    </div>
+
+    <button id="logout-btn" class="logout-btn" type="button">Cerrar sesión</button>
+  </aside>
+
+  <main>
+    <header class="header">
+      <h1>Michis Astrales</h1>
+    </header>
+
+    <section class="section">
+      <h2 class="section-title">Tu carta de raza</h2>
+      <div id="breed-card" class="breed-card"></div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Tu personalidad</h2>
+      <div id="personality-card" class="results-grid"></div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Tu carta final</h2>
+      <div id="final-card" class="final-card"></div>
+    </section>
+  </main>
+
+  <script>
+    function normalize(s) {
+      return (s || '')
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    function slugifyBreed(name) {
+      return (name || '')
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .trim();
+    }
+
+    function buildSpecificSourceUrl(provider, breedName) {
+      const providerGeneral = {
+        TICA: 'https://tica.org/ticas-breeds/browse-all-breeds/',
+        Hill: 'https://www.hillspet.com/cat-care/cat-breeds',
+        'Royal Canin': 'https://www.royalcanin.com/mx/cats/breeds',
+        Purina: 'https://www.purina.co.uk/find-a-pet/cat-breeds'
+      };
+
+      const normalizedBreed = normalize(breedName || '');
+      const knownBrokenBreeds = {
+        peterbald: {
+          TICA: providerGeneral.TICA,
+          Hill: providerGeneral.Hill,
+          'Royal Canin': 'https://www.royalcanin.com/mx/cats/breeds/peterbald',
+          Purina: 'https://www.purina.es/encuentra-mascota/razas-de-gato/peterbald'
+        },
+        'ruso azul': {
+          TICA: 'https://www.purina.es/encuentra-mascota/razas-de-gato/azul-ruso',
+          Hill: 'https://www.purina.es/encuentra-mascota/razas-de-gato/azul-ruso',
+          'Royal Canin': 'https://www.purina.es/encuentra-mascota/razas-de-gato/azul-ruso',
+          Purina: 'https://www.purina.es/encuentra-mascota/razas-de-gato/azul-ruso'
+        }
+      };
+
+      const override = knownBrokenBreeds[normalizedBreed]?.[provider];
+      if (override) return override;
+
+      const slugMap = {
+        bengali: 'bengal',
+        'bengali de pelo largo': 'bengal-longhair',
+        savannah: 'savannah',
+        toyger: 'toyger',
+        'egyptian mau': 'egyptian-mau',
+        chausie: 'chausie',
+        serengeti: 'serengeti',
+        persa: 'persian',
+        himalayo: 'himalayan',
+        'exotico de pelo corto': 'exotic-shorthair',
+        ragdoll: 'ragdoll',
+        chartreux: 'chartreux',
+        'american wirehair': 'american-wirehair',
+        siames: 'siamese',
+        'oriental de pelo corto': 'oriental-shorthair',
+        'oriental de pelo largo': 'oriental-longhair',
+        balines: 'balinese',
+        'tailandes (thai)': 'thai',
+        tonkines: 'tonkinese',
+        burmes: 'burmese',
+        birmilla: 'birmilla',
+        'maine coon': 'maine-coon',
+        'maine coon polydactyl': 'maine-coon-polydactyl',
+        'noruego de bosque': 'norwegian-forest-cat',
+        siberiano: 'siberian',
+        highlander: 'highlander',
+        'britanico de pelo corto': 'british-shorthair',
+        'escoces plegado': 'scottish-fold',
+        'escoces recto': 'scottish-straight',
+        'american curl': 'american-curl',
+        'american curl pelo largo': 'american-curl-longhair',
+        manx: 'manx',
+        'manx tailed': 'manx-tailed',
+        'japanese bobtail': 'japanese-bobtail',
+        'japanese bobtail pelo largo': 'japanese-bobtail-longhair',
+        'american bobtail': 'american-bobtail',
+        'american bobtail shorthair': 'american-bobtail-shorthair',
+        'kurilian bobtail': 'kurilian-bobtail',
+        'kurilian bobtail pelo largo': 'kurilian-bobtail-longhair',
+        pixiebob: 'pixiebob',
+        'pixiebob pelo largo': 'pixiebob-longhair',
+        toybob: 'toybob',
+        munchkin: 'munchkin',
+        'munchkin pelo largo': 'munchkin-longhair',
+        minuet: 'minuet',
+        'minuet pelo largo': 'minuet-longhair',
+        'minuet talls': 'minuet-talls',
+        bombay: 'bombay',
+        burmilla: 'burmilla',
+        'burmilla pelo largo': 'burmilla-longhair',
+        'australian mist': 'australian-mist',
+        khaomanee: 'khaomanee',
+        cherubim: 'cherubim',
+        snowshoe: 'snowshoe',
+        sphynx: 'sphynx',
+        donskoy: 'donskoy',
+        petersbald: 'peterbald',
+        lykoi: 'lykoi',
+        'devon rex': 'devon-rex',
+        'cornish rex': 'cornish-rex',
+        'selkirk rex': 'selkirk-rex',
+        'selkirk rex pelo largo': 'selkirk-rex-longhair',
+        laperm: 'laperm',
+        'laperm pelo corto': 'laperm-shorthair',
+        'tennessee rex': 'tennessee-rex',
+        ocicat: 'ocicat',
+        abisinio: 'abyssinian',
+        'ruso azul': 'russian-blue',
+        korat: 'korat',
+        'habana (havana brown)': 'havana-brown',
+        singapura: 'singapura',
+        'british longhair': 'british-longhair',
+        'turco angora': 'turkish-angora',
+        'turco van': 'turkish-van',
+        nebelung: 'nebelung',
+        cymric: 'cymric',
+        'american shorthair': 'american-shorthair'
+      };
+
+      const direct = slugMap[normalizedBreed] || slugifyBreed(breedName || '');
+      if (!direct) return providerGeneral[provider] || '#';
+
+      if (/TICA/i.test(provider)) return `https://tica.org/breeds/${direct}/`;
+      if (/Hill/i.test(provider)) return `https://www.hillspet.com/cat-care/cat-breeds/${direct}`;
+      if (/Royal/i.test(provider)) return `https://www.royalcanin.com/mx/cats/breeds/${direct}`;
+      if (/Purina/i.test(provider)) return `https://www.purina.co.uk/find-a-pet/cat-breeds/${direct}`;
+      return '#';
+    }
+
+    function injectSpecificSourceLinks(sourceHtml, breedName) {
+      if (!sourceHtml) return sourceHtml;
+      let result = sourceHtml;
+      if (/TICA/i.test(result)) {
+        result = result.replace(/href="[^"]*"/i, `href="${buildSpecificSourceUrl('TICA', breedName)}"`);
+      }
+      if (/Hill/i.test(result)) {
+        result = result.replace(/href="[^"]*"/i, `href="${buildSpecificSourceUrl('Hill', breedName)}"`);
+      }
+      if (/Royal/i.test(result)) {
+        result = result.replace(/href="[^"]*"/i, `href="${buildSpecificSourceUrl('Royal Canin', breedName)}"`);
+      }
+      if (/Purina/i.test(result)) {
+        result = result.replace(/href="[^"]*"/i, `href="${buildSpecificSourceUrl('Purina', breedName)}"`);
+      }
+      return result;
+    }
+
+    async function renderBreedCard() {
+      const breed = JSON.parse(localStorage.getItem('michiBreed') || 'null');
+      const container = document.getElementById('breed-card');
+
+      if (!breed || !breed.name) {
+        container.innerHTML = '<div class="empty">Aún no hay una raza guardada.</div>';
+        return;
+      }
+
+      try {
+        const response = await fetch('index.html');
+        const text = await response.text();
+        const doc = new DOMParser().parseFromString(text, 'text/html');
+        const strongs = Array.from(doc.querySelectorAll('strong'));
+        const normBreed = normalize(breed.name);
+
+        let strongEl = strongs.find(s => normalize(s.textContent || '') === normBreed);
+        if (!strongEl) {
+          strongEl = strongs.find(s => normalize(s.textContent || '').includes(normBreed) || normBreed.includes(normalize(s.textContent || '')));
+        }
+
+        if (!strongEl) {
+          container.innerHTML = `
+            <div class="breed-copy" style="grid-column:1 / -1;">
+              <h2>${breed.name}</h2>
+              <div class="meta-block">
+                <span class="meta-label">Signo</span>
+                <p class="meta-value">${breed.sign || 'No disponible'}</p>
+              </div>
+            </div>
+          `;
+          return;
+        }
+
+        const li = strongEl.closest('li');
+        const infoUl = li ? li.querySelector('ul') : null;
+        const imgSrc = li ? li.querySelector('img')?.src || '' : '';
+
+        let characteristics = '';
+        let personality = '';
+        let sourceHtml = '';
+
+        if (infoUl) {
+          Array.from(infoUl.querySelectorAll('li')).forEach(item => {
+            const text = item.textContent || '';
+            const contentHtml = (item.innerHTML || '').replace(/^\s*[^:]{1,80}:\s*/i, '');
+            if (/Características/i.test(text)) characteristics = contentHtml;
+            else if (/Personalidad/i.test(text)) personality = contentHtml;
+            else if (/Fuente/i.test(text)) sourceHtml = contentHtml;
+          });
+        }
+
+        const fixedSourceHtml = injectSpecificSourceLinks(sourceHtml, strongEl.textContent || breed.name);
+        container.innerHTML = `
+          <img src="${imgSrc}" alt="Raza ${strongEl.textContent}" />
+          <div class="breed-copy">
+            <h2>${strongEl.textContent}</h2>
+            <div class="meta-block">
+              <span class="meta-label">Signo</span>
+              <p class="meta-value">${breed.sign || 'No disponible'}</p>
+            </div>
+            <div class="meta-block">
+              <span class="meta-label">Características</span>
+              <p class="meta-value">${characteristics || '—'}</p>
+            </div>
+            <div class="meta-block">
+              <span class="meta-label">Personalidad</span>
+              <p class="meta-value">${personality || '—'}</p>
+            </div>
+            <div class="meta-block">
+              <span class="meta-label">Más información</span>
+              <div class="meta-value">${fixedSourceHtml || '—'}</div>
+            </div>
+          </div>
+        `;
+      } catch (error) {
+        console.error(error);
+        document.getElementById('breed-card').innerHTML = `
+          <div class="breed-copy" style="grid-column:1 / -1;">
+            <h2>${breed.name}</h2>
+            <div class="meta-block">
+              <span class="meta-label">Signo</span>
+              <p class="meta-value">${breed.sign || 'No disponible'}</p>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function renderPersonalityCards() {
+      const quiz = JSON.parse(localStorage.getItem('michiQuizResult') || 'null');
+      const container = document.getElementById('personality-card');
+
+      if (!quiz || !Array.isArray(quiz.results) || quiz.results.length === 0) {
+        container.innerHTML = '<div class="empty">Todavía no hay resultados del quiz guardados.</div>';
+        return;
+      }
+
+      const descriptions = {
+        Naranja: 'Sociable, alegre y muy expresivo. Le gusta jugar y compartir energía.',
+        Tuxedo: 'Equilibrado, adaptable y tranquilo. Se lleva bien con casi todo el mundo.',
+        Negro: 'Sereno, confiado y leal. Prefiere la seguridad y la estabilidad.',
+        Tabby: 'Curioso, activo y cazador. Está siempre explorando nuevos instantes.',
+        Gris: 'Inteligente, observador y reservado. Valora lo profundo y lo tranquilo.',
+        Tricolor: 'Independiente y con carácter. Tiene límites muy marcados.'
+      };
+
+      const items = quiz.results
+        .filter(item => item && item.value > 0)
+        .sort((a, b) => b.percent - a.percent)
+        .map(item => `
+          <article class="result-card">
+            <div class="badge">${item.type}</div>
+            <div class="percent">${item.percent}%</div>
+            <p>${descriptions[item.type] || 'Perfil con matices muy particulares.'}</p>
+          </article>
+        `)
+        .join('');
+
+      container.innerHTML = items;
+    }
+
+    function renderFinalCard() {
+      const breed = JSON.parse(localStorage.getItem('michiBreed') || 'null');
+      const quiz = JSON.parse(localStorage.getItem('michiQuizResult') || 'null');
+      const container = document.getElementById('final-card');
+
+      if (!breed || !quiz) {
+        container.innerHTML = '<div class="empty">No hay una carta final disponible todavía.</div>';
+        return;
+      }
+
+      const items = (quiz.results || [])
+        .filter(item => item && item.value > 0)
+        .sort((a, b) => b.percent - a.percent)
+        .map(item => `
+          <div class="card-item">
+            <span class="type">${item.type}</span>
+            <div class="percent">${item.percent}%</div>
+          </div>
+        `)
+        .join('');
+
+      container.innerHTML = `
+        <div class="final-card-inner">
+          <div class="summary-item">
+            <strong>Raza sugerida</strong>
+            <span>${breed.name || 'No disponible'}</span>
+          </div>
+          <div class="summary-item">
+            <strong>Signo</strong>
+            <span>${breed.sign || 'No disponible'}</span>
+          </div>
+          <div class="summary-item">
+            <strong>Resultado personal</strong>
+            <span>${quiz.finalResult || 'No disponible'}</span>
+          </div>
+          <div class="card-grid">${items || '<div class="empty">Sin resultados.</div>'}</div>
+        </div>
+      `;
+    }
+
+    renderBreedCard();
+    renderPersonalityCards();
+    renderFinalCard();
+
+    const profileFab = document.getElementById('profile-fab');
+    const profilePanel = document.getElementById('profile-panel');
+    const closePanelBtn = document.getElementById('close-panel');
+    const profileEmail = document.getElementById('profile-email');
+    const profileBreed = document.getElementById('profile-breed');
+    const logoutBtn = document.getElementById('logout-btn');
+
+    function renderSessionPanel() {
+      const session = JSON.parse(localStorage.getItem('michiCurrentSession') || 'null');
+      const breed = JSON.parse(localStorage.getItem('michiBreed') || 'null');
+
+      const email = session && session.email ? session.email : 'No hay sesión activa';
+      const breedName = (breed && breed.name) || (session && session.breed) || 'No disponible';
+
+      profileEmail.textContent = email;
+      profileBreed.textContent = breedName;
+    }
+
+    function openPanel() {
+      renderSessionPanel();
+      profilePanel.classList.add('visible');
+    }
+
+    function closePanel() {
+      profilePanel.classList.remove('visible');
+    }
+
+    profileFab.addEventListener('click', openPanel);
+    closePanelBtn.addEventListener('click', closePanel);
+    profilePanel.addEventListener('click', (event) => {
+      if (event.target === profilePanel) closePanel();
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('michiCurrentSession');
+      localStorage.removeItem('michiBreed');
+      localStorage.removeItem('michiQuizResult');
+      window.location.href = 'inicio.html';
+    });
+
+    renderSessionPanel();
+  </script>
+</body>
+</html>

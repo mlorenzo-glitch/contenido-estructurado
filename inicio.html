@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Michis Astrales — portada: descubre tu raza gatuna según tu fecha.">
+  <title>Michis Astrales — Portada</title>
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="https://use.typekit.net/qzj8zld.css">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <main style="min-height:100vh; display:flex; align-items:center; justify-content:center; padding:2rem;">
+    <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px; width:100%;">
+      <section id="hero" style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; text-align:center;">
+        <h1 style="margin:0; font-family:'neulis-cursive', 'Tenon', system-ui, Arial, Helvetica, sans-serif; font-weight:700; font-size:3.4rem; line-height:1;">Michis Astrales</h1>
+        <button id="start-btn" type="button" style="padding:0.9rem 2rem; border:none; border-radius:999px; background:#171717; color:#fff; font-family:'Tenon', system-ui, Arial, Helvetica, sans-serif; font-weight:700; font-size:1rem; cursor:pointer;">Empezar</button>
+      </section>
+
+      <section id="input" style="display:none; flex-direction:column; align-items:center; gap:12px; width:100%; max-width:360px; text-align:center;">
+        <label for="bdate" style="font-family:'Tenon', system-ui, Arial, Helvetica, sans-serif; font-weight:700;">Fecha de nacimiento</label>
+        <input type="date" id="bdate" style="width:100%; max-width:280px; padding:0.9rem 1rem; border:1px solid #d1d5db; border-radius:12px; font-family:'Tenon', system-ui, Arial, Helvetica, sans-serif; font-size:1.1rem; background:#fff; color:#171717;" />
+        <button id="go" type="button" style="padding:0.9rem 2rem; border:none; border-radius:999px; background:#171717; color:#fff; font-family:'Tenon', system-ui, Arial, Helvetica, sans-serif; font-weight:700; font-size:1rem; cursor:pointer;">Ingresar</button>
+        <div id="output" aria-live="polite"></div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+  // Determina signo zodiacal por fecha
+  function getSign(d){
+    const m = d.getMonth() + 1; // 1-12
+    const day = d.getDate();
+    if ((m==3 && day>=21) || (m==4 && day<=19)) return 'Aries';
+    if ((m==4 && day>=20) || (m==5 && day<=20)) return 'Tauro';
+    if ((m==5 && day>=21) || (m==6 && day<=20)) return 'Geminis';
+    if ((m==6 && day>=21) || (m==7 && day<=22)) return 'Cancer';
+    if ((m==7 && day>=23) || (m==8 && day<=22)) return 'Leo';
+    if ((m==8 && day>=23) || (m==9 && day<=22)) return 'Virgo';
+    if ((m==9 && day>=23) || (m==10 && day<=22)) return 'Libra';
+    if ((m==10 && day>=23) || (m==11 && day<=21)) return 'Escorpio';
+    if ((m==11 && day>=22) || (m==12 && day<=21)) return 'Sagitario';
+    if ((m==12 && day>=22) || (m==1 && day<=19)) return 'Capricornio';
+    if ((m==1 && day>=20) || (m==2 && day<=18)) return 'Acuario';
+    return 'Piscis';
+  }
+
+  // LCG pseudo-aleatorio determinista a partir de una semilla (fecha)
+  function seededIndex(seed, n){
+    let x = seed & 0xffffffff;
+    x = (x * 1664525 + 1013904223) >>> 0;
+    x = (x * 1664525 + 1013904223) >>> 0;
+    return x % n;
+  }
+
+  function normalize(s){
+    return s.toLowerCase().normalize('NFD').replace(/[^\w\s-]/g, '').replace(/\s+/g,' ').trim();
+  }
+
+  function slugifyBreed(name){
+    return (name || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim();
+  }
+
+  function buildSpecificSourceUrl(provider, breedName){
+    const providerGeneral = {
+      TICA: 'https://tica.org/ticas-breeds/browse-all-breeds/',
+      Hill: 'https://www.hillspet.com/cat-care/cat-breeds',
+      'Royal Canin': 'https://www.royalcanin.com/mx/cats/breeds',
+      Purina: 'https://www.purina.co.uk/find-a-pet/cat-breeds'
+    };
+
+    const normalizedBreed = normalize(breedName || '');
+    const knownBrokenBreeds = {
+      peterbald: {
+        TICA: providerGeneral.TICA,
+        Hill: providerGeneral.Hill,
+        'Royal Canin': 'https://www.royalcanin.com/mx/cats/breeds/peterbald',
+        Purina: 'https://www.purina.es/encuentra-mascota/razas-de-gato/peterbald'
+      },
+      'ruso azul': {
+        TICA: 'https://www.purina.es/encuentra-mascota/razas-de-gato/azul-ruso',
+        Hill: 'https://www.purina.es/encuentra-mascota/razas-de-gato/azul-ruso',
+        'Royal Canin': 'https://www.purina.es/encuentra-mascota/razas-de-gato/azul-ruso',
+        Purina: 'https://www.purina.es/encuentra-mascota/razas-de-gato/azul-ruso'
+      }
+    };
+
+    const override = knownBrokenBreeds[normalizedBreed]?.[provider];
+    if (override) return override;
+
+    const slugMap = {
+      'bengali': 'bengal',
+      'bengali de pelo largo': 'bengal-longhair',
+      'savannah': 'savannah',
+      'toyger': 'toyger',
+      'egyptian mau': 'egyptian-mau',
+      'chausie': 'chausie',
+      'serengeti': 'serengeti',
+      'persa': 'persian',
+      'himalayo': 'himalayan',
+      'exotico de pelo corto': 'exotic-shorthair',
+      'ragdoll': 'ragdoll',
+      'chartreux': 'chartreux',
+      'american wirehair': 'american-wirehair',
+      'siames': 'siamese',
+      'oriental de pelo corto': 'oriental-shorthair',
+      'oriental de pelo largo': 'oriental-longhair',
+      'balines': 'balinese',
+      'tailandes (thai)': 'thai',
+      'tonkines': 'tonkinese',
+      'burmes': 'burmese',
+      'birmilla': 'birmilla',
+      'maine coon': 'maine-coon',
+      'maine coon polydactyl': 'maine-coon-polydactyl',
+      'noruego de bosque': 'norwegian-forest-cat',
+      'siberiano': 'siberian',
+      'highlander': 'highlander',
+      'britanico de pelo corto': 'british-shorthair',
+      'escoces plegado': 'scottish-fold',
+      'escoces recto': 'scottish-straight',
+      'american curl': 'american-curl',
+      'american curl pelo largo': 'american-curl-longhair',
+      'manx': 'manx',
+      'manx tailed': 'manx-tailed',
+      'japanese bobtail': 'japanese-bobtail',
+      'japanese bobtail pelo largo': 'japanese-bobtail-longhair',
+      'american bobtail': 'american-bobtail',
+      'american bobtail shorthair': 'american-bobtail-shorthair',
+      'kurilian bobtail': 'kurilian-bobtail',
+      'kurilian bobtail pelo largo': 'kurilian-bobtail-longhair',
+      'pixiebob': 'pixiebob',
+      'pixiebob pelo largo': 'pixiebob-longhair',
+      'toybob': 'toybob',
+      'munchkin': 'munchkin',
+      'munchkin pelo largo': 'munchkin-longhair',
+      'minuet': 'minuet',
+      'minuet pelo largo': 'minuet-longhair',
+      'minuet talls': 'minuet-talls',
+      'bombay': 'bombay',
+      'burmilla': 'burmilla',
+      'burmilla pelo largo': 'burmilla-longhair',
+      'australian mist': 'australian-mist',
+      'khaomanee': 'khaomanee',
+      'cherubim': 'cherubim',
+      'snowshoe': 'snowshoe',
+      'sphynx': 'sphynx',
+      'donskoy': 'donskoy',
+      'peterbald': 'peterbald',
+      'lykoi': 'lykoi',
+      'devon rex': 'devon-rex',
+      'cornish rex': 'cornish-rex',
+      'selkirk rex': 'selkirk-rex',
+      'selkirk rex pelo largo': 'selkirk-rex-longhair',
+      'laperm': 'laperm',
+      'laperm pelo corto': 'laperm-shorthair',
+      'tennessee rex': 'tennessee-rex',
+      'ocicat': 'ocicat',
+      'abisinio': 'abyssinian',
+      'ruso azul': 'russian-blue',
+      'korat': 'korat',
+      'habana (havana brown)': 'havana-brown',
+      'singapura': 'singapura',
+      'british longhair': 'british-longhair',
+      'turco angora': 'turkish-angora',
+      'turco van': 'turkish-van',
+      'nebelung': 'nebelung',
+      'cymric': 'cymric',
+      'american shorthair': 'american-shorthair',
+      'siberiano': 'siberian'
+    };
+
+    const direct = slugMap[normalizedBreed] || slugifyBreed(breedName || '');
+    if (!direct) return providerGeneral[provider] || '#';
+
+    if (/TICA/i.test(provider)) return `https://tica.org/breeds/${direct}/`;
+    if (/Hill/i.test(provider)) return `https://www.hillspet.com/cat-care/cat-breeds/${direct}`;
+    if (/Royal/i.test(provider)) return `https://www.royalcanin.com/mx/cats/breeds/${direct}`;
+    if (/Purina/i.test(provider)) return `https://www.purina.co.uk/find-a-pet/cat-breeds/${direct}`;
+    return '#';
+  }
+
+  function injectSpecificSourceLinks(sourceHtml, breedName){
+    if (!sourceHtml) return sourceHtml;
+    let result = sourceHtml;
+    if (/TICA/i.test(result)) {
+      result = result.replace(/href="[^"]*"/i, `href="${buildSpecificSourceUrl('TICA', breedName)}"`);
+    }
+    if (/Hill/i.test(result)) {
+      result = result.replace(/href="[^"]*"/i, `href="${buildSpecificSourceUrl('Hill', breedName)}"`);
+    }
+    if (/Royal/i.test(result)) {
+      result = result.replace(/href="[^"]*"/i, `href="${buildSpecificSourceUrl('Royal Canin', breedName)}"`);
+    }
+    if (/Purina/i.test(result)) {
+      result = result.replace(/href="[^"]*"/i, `href="${buildSpecificSourceUrl('Purina', breedName)}"`);
+    }
+    return result;
+  }
+
+  function showFullScreen(html){
+    const existing = document.getElementById('breed-overlay');
+    if(existing) existing.remove();
+    const overlay = document.createElement('div');
+    overlay.id = 'breed-overlay';
+    Object.assign(overlay.style, {
+      position: 'fixed', top:0, left:0, right:0, bottom:0, background: 'rgba(23, 23, 23, 0.35)', zIndex:9999, overflow:'auto', padding:'32px',
+      display:'flex', alignItems:'center', justifyContent:'center', color:'#111'
+    });
+
+    const panel = document.createElement('div');
+    panel.style.width = 'min(900px, 90vw)';
+    panel.style.background = '#fff';
+    panel.style.borderRadius = '18px';
+    panel.style.boxShadow = '0 20px 60px rgba(0,0,0,0.18)';
+    panel.style.padding = '28px 30px 20px';
+    panel.style.position = 'relative';
+    panel.innerHTML = `${html}<div style="display:flex; justify-content:center; margin-top:18px;"><button id="next-breed" type="button" style="padding:0.9rem 2rem; border:none; border-radius:999px; background:#171717; color:#fff; font-family:'Tenon', system-ui, Arial, Helvetica, sans-serif; font-weight:700; font-size:1rem; cursor:pointer;">Siguiente</button></div>`;
+    overlay.appendChild(panel);
+    document.body.appendChild(overlay);
+    document.getElementById('next-breed').addEventListener('click', ()=> {
+      window.location.href = 'quiz.html';
+    });
+  }
+
+  document.getElementById('start-btn').addEventListener('click', () => {
+    const hero = document.getElementById('hero');
+    const input = document.getElementById('input');
+    hero.style.display = 'none';
+    input.style.display = 'flex';
+    input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    document.getElementById('bdate').focus();
+  });
+
+  document.getElementById('go').addEventListener('click', async ()=>{
+    const v = document.getElementById('bdate').value;
+    const out = document.getElementById('output');
+    out.innerHTML = '';
+    if(!v){ out.textContent = 'Indica tu fecha de nacimiento.'; return; }
+    const d = new Date(v);
+    const sign = getSign(d);
+
+    try{
+      const resp = await fetch('index.html');
+      const text = await resp.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(text, 'text/html');
+
+      // Intentamos extraer la línea 'Razas asociadas' de la sección del signo
+      const id = sign.toLowerCase().replace(/í/g,'i').replace(/á/g,'a').replace(/é/g,'e').replace(/ó/g,'o').replace(/ú/g,'u').replace(/ñ/g,'n');
+      let para = doc.querySelector(`#${id} p`);
+      let breeds = [];
+      if(para && /Razas asociadas:/i.test(para.textContent)){
+        const m = para.textContent.match(/Razas asociadas:\s*(.*)/i);
+        if(m && m[1]){
+          breeds = m[1].split(',').map(s=>s.trim().replace(/\.$/,'')).filter(Boolean);
+        }
+      }
+
+      // Fallback: tomar nombres de etiquetas <strong> como lista si no hay párrafo claro
+      if(breeds.length === 0){
+        breeds = Array.from(doc.querySelectorAll('strong')).map(s=>s.textContent.trim()).filter(Boolean);
+      }
+
+      if(breeds.length === 0){ out.textContent = 'No se encontraron razas en la base de datos.'; return; }
+
+      // Crear semilla determinista: año * 10000 + mes * 100 + día
+      const seed = d.getFullYear()*10000 + (d.getMonth()+1)*100 + d.getDate();
+      const year = d.getFullYear();
+
+      // Prioridad: si el año de nacimiento coincide con una raza concreta dentro del signo,
+      // elegimos entre esas razas y no al azar entre todas las opciones del signo.
+      const signSection = doc.querySelector(`#${id}`);
+      const yearMatches = signSection
+        ? Array.from(signSection.querySelectorAll('li'))
+            .map(li => {
+              const strong = li.querySelector('strong');
+              const name = strong ? strong.textContent.trim() : '';
+              const yearsText = li.textContent.match(/Años:\s*([0-9,\s]+)/i)?.[1] || '';
+              const years = yearsText.split(',').map(v => Number(v.trim())).filter(n => !Number.isNaN(n));
+              return { name, years };
+            })
+            .filter(item => item.name && item.years.includes(year))
+        : [];
+
+      let breed = '';
+      if (yearMatches.length > 0) {
+        const selected = yearMatches[seededIndex(seed, yearMatches.length)];
+        breed = selected.name;
+      } else {
+        const idx = seededIndex(seed, breeds.length);
+        breed = breeds[idx];
+      }
+
+      const breedData = { name: breed, sign };
+      localStorage.setItem('michiBreed', JSON.stringify(breedData));
+
+      // Buscar la ficha completa en index.html
+      const strongs = Array.from(doc.querySelectorAll('strong'));
+      const normBreed = normalize(breed);
+      let strongEl = strongs.find(s => normalize(s.textContent || '') === normBreed);
+
+      // If exact match not found, try partial match
+      if(!strongEl){
+        strongEl = strongs.find(s => normalize(s.textContent || '').includes(normBreed) || normBreed.includes(normalize(s.textContent || '')));
+      }
+
+      if(strongEl){
+        const parentLi = strongEl.closest('li');
+        const infoUl = parentLi ? parentLi.querySelector('ul') : null;
+        let characteristics = '', personality = '', sourceHtml = '';
+        if(infoUl){
+          const items = Array.from(infoUl.querySelectorAll('li'));
+          items.forEach(it =>{
+            // Remove leading label like "Características:" or "Fuente:" from the innerHTML
+            const contentHtml = (it.innerHTML || '').replace(/^\s*[^:]{1,60}:\s*/i, '');
+            const text = it.textContent || '';
+            if(/Características/i.test(text)) characteristics = contentHtml;
+            else if(/Personalidad/i.test(text)) personality = contentHtml;
+            else if(/Fuente/i.test(text)) sourceHtml = contentHtml;
+          });
+        }
+
+        const imgSrc = strongEl.closest('li').querySelector('img')?.src || '';
+        const fixedSourceHtml = injectSpecificSourceLinks(sourceHtml, strongEl.textContent || breed);
+
+        const detailHtml = `
+          <div style="padding-top:12px;">
+            <h1 style="margin:0 0 14px; text-align:left; font-family: 'neulis-cursive', 'Tenon', system-ui, Arial, Helvetica, sans-serif; font-weight:700; font-size:2.4rem;">${strongEl.textContent}</h1>
+            <div style="margin:0 0 18px; font-size:1rem; font-weight:700; color:#4a4a4a; letter-spacing:0.04em;">Signo zodiacal: ${sign}</div>
+            <div style="display:flex; gap:24px; align-items:flex-start; font-size:18px; line-height:1.5;">
+              <div style="flex:0 0 40%; max-width:40%;">
+                <img src="${imgSrc}" alt="Imagen ${strongEl.textContent}" style="width:100%; height:auto; border-radius:8px; object-fit:cover; display:block;" />
+              </div>
+              <div style="flex:1; min-width:0;">
+                <div style="font-size:20px; margin-top:12px;"><strong>Características:</strong></div>
+                <p style="margin:6px 0 12px;">${characteristics || '—'}</p>
+
+                <div style="font-size:20px; margin-top:6px;"><strong>Personalidad:</strong></div>
+                <p style="margin:6px 0 12px;">${personality || '—'}</p>
+
+                <div style="font-size:20px; margin-top:6px;"><strong>Más información:</strong></div>
+                <p style="margin:6px 0 12px;">${fixedSourceHtml || '—'}</p>
+              </div>
+            </div>
+          </div>
+        `;
+        showFullScreen(detailHtml);
+      }else{
+        // Fallback simple display
+        out.innerHTML = `<h3 style="margin-top:0">Raza sugerida: ${breed}</h3><p>Signo detectado: ${sign}</p>`;
+      }
+    }catch(err){
+      console.error(err);
+      // Mostrar mensaje más útil si fetch falla por CORS/file://
+      out.innerHTML = '<p>Error al leer la base de datos local.</p><p>Si abriste el archivo directamente (file://), inicia un servidor local en este directorio y vuelve a cargar la página:</p><pre>python3 -m http.server</pre>';
+    }
+  });
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guardar</title>
+  <link rel="icon" href="favicon.ico" />
+  <link rel="stylesheet" href="https://use.typekit.net/qzj8zld.css" />
+  <style>
+    :root {
+      --bg: #f4f4f0;
+      --panel: #ffffff;
+      --text: #171717;
+      --muted: #4a4a4a;
+      --line: #e7e1d8;
+      --dark: #171717;
+      --soft: #f0ece6;
+      --radius: 22px;
+      --shadow: 0 18px 40px rgba(23, 23, 23, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Tenon', system-ui, Arial, Helvetica, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px;
+    }
+
+    main {
+      width: min(760px, 100%);
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px 28px 24px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--muted);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-family: 'neulis-cursive', 'Tenon', system-ui, Arial, Helvetica, sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.7rem);
+      line-height: 1;
+    }
+
+    .subtitle {
+      margin: 0 0 22px;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.7;
+      max-width: 620px;
+    }
+
+    .form-wrap {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .form-wrap.visible {
+      display: flex;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+      width: 100%;
+      max-width: 420px;
+      align-items: center;
+    }
+
+    label {
+      width: 100%;
+      font-weight: 700;
+      color: var(--text);
+      text-align: left;
+    }
+
+    input[type="email"] {
+      width: 100%;
+      max-width: 420px;
+      padding: 0.9rem 1rem;
+      border: 1px solid #d5d0c9;
+      border-radius: 12px;
+      font: inherit;
+      font-size: 1rem;
+      background: #fff;
+      color: var(--text);
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      background: var(--dark);
+      color: #fff;
+      padding: 0.9rem 1.6rem;
+      font: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .summary {
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      display: none;
+      gap: 12px;
+    }
+
+    .summary-item {
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #faf7f2;
+    }
+
+    .summary-item strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .status {
+      margin-top: 16px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: #eefaf1;
+      color: #1e6137;
+      border: 1px solid #cfead7;
+      display: none;
+      font-weight: 600;
+    }
+
+    .status.visible {
+      display: block;
+    }
+
+    .card {
+      display: block;
+      margin-top: 22px;
+      padding: 22px 20px;
+      border: 1px solid var(--line);
+      border-radius: 18px 18px 24px 24px;
+      background: linear-gradient(180deg, #fff 0%, #f9f5f0 100%);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.04);
+    }
+
+    .card.visible {
+      display: block;
+    }
+
+    .card-title {
+      margin: 0 0 8px;
+      font-family: 'neulis-cursive', 'Tenon', system-ui, Arial, Helvetica, sans-serif;
+      font-size: clamp(1.8rem, 2.7vw, 2.7rem);
+      text-align: center;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .card-item {
+      padding: 14px 12px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #faf7f2;
+      text-align: center;
+    }
+
+    .card-item .type {
+      display: block;
+      font-weight: 800;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .card-item .percent {
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    .card-actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 18px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 640px) {
+      .panel { padding: 24px 18px 20px; }
+      button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="panel">
+      <div class="eyebrow">Guardar</div>
+      <h1>Guarda tu carta astral</h1>
+      <p class="subtitle">Agrega un correo electrónico para guardar tus resultados de tu carta gatuna.</p>
+
+      <div id="result-card" class="card" aria-live="polite">
+        <h2 class="card-title">Tu carta gatuna</h2>
+        <div id="card-body"></div>
+        <div class="card-actions">
+          <button type="button" id="save-card-btn">Guardar</button>
+        </div>
+      </div>
+
+      <form id="profile-form" class="form-wrap hidden">
+        <div class="form-group">
+          <label for="email">Correo electrónico</label>
+          <input id="email" name="email" type="email" placeholder="tuemail@ejemplo.com" required />
+        </div>
+        <div class="actions">
+          <button type="submit">Guardar</button>
+        </div>
+      </form>
+
+      <div id="status" class="status" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <script>
+    const profileForm = document.getElementById('profile-form');
+    const emailInput = document.getElementById('email');
+    const statusEl = document.getElementById('status');
+    const resultCard = document.getElementById('result-card');
+    const cardBody = document.getElementById('card-body');
+    const saveCardBtn = document.getElementById('save-card-btn');
+
+    function renderSavedCard() {
+      const breed = JSON.parse(localStorage.getItem('michiBreed') || 'null');
+      const quiz = JSON.parse(localStorage.getItem('michiQuizResult') || 'null');
+
+      if (!breed || !quiz) {
+        return;
+      }
+
+      const items = (quiz.results || [])
+        .filter(item => item && item.value > 0)
+        .sort((a, b) => b.percent - a.percent)
+        .map(item => `
+          <div class="card-item">
+            <span class="type">${item.type}</span>
+            <div class="percent">${item.percent}%</div>
+          </div>
+        `)
+        .join('');
+
+      cardBody.innerHTML = `
+        <div class="summary-item">
+          <strong>Raza sugerida</strong>
+          <span>${breed.name}</span>
+        </div>
+        <div class="summary-item">
+          <strong>Signo</strong>
+          <span>${breed.sign || 'No disponible'}</span>
+        </div>
+        <div class="card-grid">${items}</div>
+      `;
+    }
+
+    function showStatus(message) {
+      statusEl.textContent = message;
+      statusEl.classList.add('visible');
+    }
+
+    saveCardBtn.addEventListener('click', function () {
+      resultCard.classList.add('hidden');
+      profileForm.classList.remove('hidden');
+      profileForm.classList.add('visible');
+      statusEl.textContent = '';
+      statusEl.classList.remove('visible');
+    });
+
+    profileForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const email = emailInput.value.trim();
+      if (!email || !email.includes('@')) {
+        showStatus('Ingresa un correo electrónico válido.');
+        return;
+      }
+
+      const breed = JSON.parse(localStorage.getItem('michiBreed') || 'null');
+      const quiz = JSON.parse(localStorage.getItem('michiQuizResult') || 'null');
+
+      const session = {
+        email,
+        breed: breed ? breed.name : 'No disponible',
+        sign: breed ? breed.sign : 'No disponible',
+        personality: quiz ? quiz.finalResult : 'No disponible',
+        personalityDetails: quiz ? quiz.results : [],
+        savedAt: new Date().toISOString()
+      };
+
+      const existing = JSON.parse(localStorage.getItem('michiSessions') || '[]');
+      existing.push(session);
+      localStorage.setItem('michiSessions', JSON.stringify(existing));
+
+      const currentSession = {
+        email,
+        breed: session.breed,
+        personality: session.personality,
+        sign: session.sign
+      };
+      localStorage.setItem('michiCurrentSession', JSON.stringify(currentSession));
+
+      window.location.href = 'home.html';
+    });
+
+    renderSavedCard();
+  </script>
+</body>
+</html>

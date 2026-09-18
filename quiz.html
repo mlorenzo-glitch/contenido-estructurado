@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz</title>
+  <link rel="icon" href="favicon.ico" />
+  <link rel="stylesheet" href="https://use.typekit.net/qzj8zld.css" />
+  <style>
+    :root {
+      --bg: #f4f4f0;
+      --panel: #ffffff;
+      --text: #171717;
+      --muted: #4a4a4a;
+      --line: #e7e1d8;
+      --dark: #171717;
+      --soft: #f0ece6;
+      --shadow: 0 18px 40px rgba(23, 23, 23, 0.12);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Tenon', system-ui, Arial, Helvetica, sans-serif;
+    }
+
+    main {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 48px 20px 80px;
+    }
+
+    .quiz-shell {
+      width: min(760px, 100%);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: none;
+      padding: 32px 28px 24px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--muted);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-family: 'neulis-cursive', 'Tenon', system-ui, Arial, Helvetica, sans-serif;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      line-height: 1;
+      text-align: left;
+    }
+
+    .intro {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 26px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .question-card {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .question-card.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .question-number {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .question-text {
+      margin: 0 0 20px;
+      font-size: clamp(1.2rem, 2vw, 1.7rem);
+      line-height: 1.45;
+      font-weight: 700;
+    }
+
+    .option-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .option-item {
+      margin: 0;
+    }
+
+    .option-btn {
+      width: 100%;
+      text-align: left;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px 16px;
+      font: inherit;
+      color: var(--text);
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .option-btn:hover,
+    .option-btn:focus-visible {
+      border-color: var(--dark);
+      background: #faf8f5;
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .option-btn.selected {
+      border-color: var(--dark);
+      background: #f3f0ff;
+      box-shadow: inset 0 0 0 1px rgba(23, 23, 23, 0.08);
+    }
+
+    .controls {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+
+    .progress-text {
+      display: none;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .nav-btn {
+      border: none;
+      border-radius: 999px;
+      background: var(--dark);
+      color: #fff;
+      padding: 0.9rem 1.5rem;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: opacity 0.15s ease;
+    }
+
+    .nav-btn.secondary {
+      background: #efefef;
+      color: var(--text);
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .result-card {
+      display: none;
+      margin-top: 18px;
+      padding: 28px 22px 18px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: #fff;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: none;
+    }
+
+    .result-card.visible {
+      display: block;
+    }
+
+    .result-badge {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--muted);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+
+    .result-title {
+      margin: 0 0 8px;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-family: 'neulis-cursive', 'Tenon', system-ui, Arial, Helvetica, sans-serif;
+      line-height: 1.1;
+    }
+
+    .result-copy {
+      margin: 0;
+      line-height: 1.7;
+      color: var(--muted);
+      font-size: 1.04rem;
+    }
+
+    .result-breakdown {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .result-stat {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #faf7f2;
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    .result-stat strong {
+      font-weight: 800;
+    }
+
+    .result-stack {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(150px, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+      align-items: stretch;
+    }
+
+    .result-stack.cols-1 { grid-template-columns: 1fr; }
+    .result-stack.cols-2 { grid-template-columns: repeat(2, minmax(150px, 1fr)); }
+    .result-stack.cols-3 { grid-template-columns: repeat(3, minmax(150px, 1fr)); }
+    .result-stack.cols-4 { grid-template-columns: repeat(2, minmax(150px, 1fr)); }
+    .result-stack.cols-5 { grid-template-columns: repeat(3, minmax(150px, 1fr)); justify-items: center; }
+    .result-stack.cols-5 .result-item:nth-last-child(-n + 2) { grid-column: auto; }
+    .result-stack.cols-5 .result-item:last-child { grid-column: 2; }
+    .result-stack.cols-6 { grid-template-columns: repeat(3, minmax(150px, 1fr)); }
+
+    .result-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      min-height: 240px;
+      padding: 18px 16px 20px;
+      border: 1px solid var(--line);
+      border-radius: 18px 18px 26px 26px;
+      background: linear-gradient(180deg, #fff 0%, #f9f5f0 100%);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.04);
+      position: relative;
+    }
+
+    .result-item::before {
+      content: "";
+      display: block;
+      width: 54%;
+      height: 1px;
+      background: rgba(23, 23, 23, 0.12);
+      margin: 4px auto 14px;
+      border-radius: 999px;
+    }
+
+    .result-item .result-badge {
+      margin-bottom: 10px;
+      align-self: center;
+      text-align: center;
+    }
+
+    .result-item .result-title {
+      margin-bottom: 10px;
+      text-align: center;
+      font-size: clamp(1.4rem, 2.4vw, 2.1rem);
+    }
+
+    .result-item .result-copy {
+      margin-top: auto;
+      text-align: center;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .result-actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 22px;
+    }
+
+    .result-actions .nav-btn {
+      min-width: 180px;
+    }
+
+    .intro-screen {
+      display: block;
+      padding: 8px 0 18px;
+    }
+
+    .intro-screen .intro-title {
+      margin: 0 0 12px;
+      font-family: 'neulis-cursive', 'Tenon', system-ui, Arial, Helvetica, sans-serif;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      line-height: 1;
+      text-align: left;
+    }
+
+    .intro-screen .intro-copy {
+      margin: 0 0 22px;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.7;
+      max-width: 620px;
+    }
+
+    .intro-screen .start-btn {
+      border: none;
+      border-radius: 999px;
+      background: var(--dark);
+      color: #fff;
+      padding: 0.9rem 1.6rem;
+      font: inherit;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 640px) {
+      .quiz-shell { padding: 24px 18px 20px; }
+      .controls { justify-content: center; }
+      .controls > * { width: 100%; }
+      .nav-btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="quiz-shell">
+      <div id="intro-screen" class="intro-screen">
+        <div class="eyebrow">Quiz</div>
+        <h1 class="intro-title">¿Qué tipo de michi eres?</h1>
+        <p class="intro-copy">Responde las siguientes preguntas para saber qué tipo de gato es tu personalidad.</p>
+        <button id="start-quiz-btn" class="start-btn" type="button">Empezar</button>
+      </div>
+
+      <div id="quiz"></div>
+
+      <div id="quiz-controls" class="controls hidden">
+        <div id="progress" class="progress-text">Pregunta 1 de 8</div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
+          <button id="prev-btn" class="nav-btn secondary" type="button" disabled>Anterior</button>
+          <button id="next-btn" class="nav-btn" type="button">Siguiente</button>
+        </div>
+      </div>
+
+      <div id="result" class="result-card" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <script>
+    const questions = [
+      {
+        text: 'Llega alguien nuevo a tu casa. ¿Qué haces?',
+        options: [
+          { label: 'Voy corriendo a saludar, quiero jugar con esa persona ya', type: 'Naranja' },
+          { label: 'Me acerco tranquilo, sin drama, me adapto a quien sea', type: 'Tuxedo' },
+          { label: 'Sigo en lo mío, no me altero, ya me ganaré su confianza a mi ritmo', type: 'Negro' },
+          { label: 'Voy a investigar qué trae consigo, huelo todo', type: 'Tabby' },
+          { label: 'Me quedo observando desde lejos antes de decidir si me acerco', type: 'Gris' },
+          { label: 'Depende de mi humor: puedo ignorarlo o hacerle un drama', type: 'Tricolor' }
+        ]
+      },
+      {
+        text: 'Tu plan ideal para un sábado es...',
+        options: [
+          { label: 'Que haya gente, ruido, juego, actividad todo el día', type: 'Naranja' },
+          { label: 'Cualquier plan está bien, me acomodo fácil', type: 'Tuxedo' },
+          { label: 'Uno tranquilo, sin sobresaltos, en mi lugar de siempre', type: 'Negro' },
+          { label: 'Una aventura, explorar algo que no conozca', type: 'Tabby' },
+          { label: 'Estar en silencio, cerca de mi persona de confianza', type: 'Gris' },
+          { label: 'Hacer exactamente lo que yo quiera, sin que nadie me diga nada', type: 'Tricolor' }
+        ]
+      },
+      {
+        text: 'Cuando algo no sale como esperabas...',
+        options: [
+          { label: 'Lo supero rápido, sigo con energía y buena onda', type: 'Naranja' },
+          { label: 'Me ajusto sin mucho problema, no me cuesta adaptarme', type: 'Tuxedo' },
+          { label: 'Lo tomo con calma, confío en que todo se resuelve', type: 'Negro' },
+          { label: 'Me frustro un segundo y ya estoy buscando otra cosa que hacer', type: 'Tabby' },
+          { label: 'Lo pienso mucho, aunque no lo demuestre por fuera', type: 'Gris' },
+          { label: 'Puedo ponerme temperamental, no lo disimulo', type: 'Tricolor' }
+        ]
+      },
+      {
+        text: 'Tus amigos te describirían como...',
+        options: [
+          { label: 'El más juguetón y cariñoso del grupo', type: 'Naranja' },
+          { label: 'El más equilibrado, el que se lleva bien con todos', type: 'Tuxedo' },
+          { label: 'El más leal y confiado, en el que todos confían', type: 'Negro' },
+          { label: 'El más curioso, siempre metido en algo nuevo', type: 'Tabby' },
+          { label: 'El más inteligente pero también el más reservado', type: 'Gris' },
+          { label: 'El más independiente, con carácter fuerte', type: 'Tricolor' }
+        ]
+      },
+      {
+        text: 'En una reunión familiar o social, tú eres el que...',
+        options: [
+          { label: 'Habla con todos, no se queda quieto un segundo', type: 'Naranja' },
+          { label: 'Se mueve entre grupos sin problema, cómodo en cualquier ambiente', type: 'Tuxedo' },
+          { label: 'Está tranquilo, seguro de sí mismo, sin necesidad de figurar', type: 'Negro' },
+          { label: 'Anda explorando la casa, la cocina, el jardín', type: 'Tabby' },
+          { label: 'Solo habla de verdad con una o dos personas de confianza', type: 'Gris' },
+          { label: 'Llega, hace su punto, y se va si ya se aburrió', type: 'Tricolor' }
+        ]
+      },
+      {
+        text: 'Tu nivel de energía en un día normal es...',
+        options: [
+          { label: 'Alto, constante, necesito estímulo y compañía', type: 'Naranja' },
+          { label: 'Estable, ni muy alto ni muy bajo', type: 'Tuxedo' },
+          { label: 'Calmado, no me altero fácilmente', type: 'Negro' },
+          { label: 'Muy alto, necesito moverme y cazar/jugar', type: 'Tabby' },
+          { label: 'Depende del entorno, pero por dentro siempre estoy alerta', type: 'Gris' },
+          { label: 'Alto, pero lo uso a mi manera y en mis tiempos', type: 'Tricolor' }
+        ]
+      },
+      {
+        text: 'Si algo invade tu espacio (otra persona, otro gato, un cambio)...',
+        options: [
+          { label: 'Lo convierto en oportunidad de socializar', type: 'Naranja' },
+          { label: 'Me adapto sin mucho drama', type: 'Tuxedo' },
+          { label: 'Mantengo la calma, no reacciono de más', type: 'Negro' },
+          { label: 'Voy directo a investigar qué es', type: 'Tabby' },
+          { label: 'Lo observo con cautela antes de decidir qué hacer', type: 'Gris' },
+          { label: 'Marco límites de inmediato, sin pedir permiso', type: 'Tricolor' }
+        ]
+      },
+      {
+        text: 'Elige la palabra que más te representa:',
+        options: [
+          { label: 'Cariñoso', type: 'Naranja' },
+          { label: 'Adaptable', type: 'Tuxedo' },
+          { label: 'Confiado', type: 'Negro' },
+          { label: 'Curioso', type: 'Tabby' },
+          { label: 'Reservado', type: 'Gris' },
+          { label: 'Temperamental', type: 'Tricolor' }
+        ]
+      }
+    ];
+
+    const tieBreakerQuestion = {
+      text: 'Cuando estás con alguien en quien confías totalmente...',
+      options: [
+        { label: 'Sigo siendo igual de sociable y cariñoso que siempre', type: 'Naranja' },
+        { label: 'Me relajo, pero mi naturaleza tranquila no cambia mucho', type: 'Tuxedo' },
+        { label: 'Me noto más energía y más curiosidad de lo normal', type: 'Tabby' },
+        { label: 'No cambio nada, actúo igual con todos, a mi manera', type: 'Tricolor' }
+      ],
+      tie: true
+    };
+
+    const types = ['Naranja', 'Tuxedo', 'Negro', 'Tabby', 'Gris', 'Tricolor'];
+    const scores = Object.fromEntries(types.map(type => [type, 0]));
+    let currentIndex = 0;
+    let answers = [];
+    let tieBreakUsed = false;
+    let started = false;
+
+    const introScreen = document.getElementById('intro-screen');
+    const quizControls = document.getElementById('quiz-controls');
+    const quizContainer = document.getElementById('quiz');
+    const nextBtn = document.getElementById('next-btn');
+    const prevBtn = document.getElementById('prev-btn');
+    const progressEl = document.getElementById('progress');
+    const resultEl = document.getElementById('result');
+    const startQuizBtn = document.getElementById('start-quiz-btn');
+
+    function startQuiz() {
+      started = true;
+      introScreen.classList.add('hidden');
+      quizControls.classList.remove('hidden');
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      if (!started) return;
+      const question = questions[currentIndex];
+      const isLast = currentIndex === questions.length - 1;
+      const selectedType = answers[currentIndex];
+
+      quizContainer.innerHTML = `
+        <div class="question-card active">
+          <div class="question-number">Pregunta ${currentIndex + 1}</div>
+          <p class="question-text">${question.text}</p>
+          <ul class="option-list">
+            ${question.options.map((option, index) => `
+              <li class="option-item">
+                <button
+                  class="option-btn ${selectedType === option.type ? 'selected' : ''}"
+                  type="button"
+                  data-index="${index}"
+                  data-type="${option.type}"
+                >${option.label}</button>
+              </li>
+            `).join('')}
+          </ul>
+        </div>
+      `;
+
+      nextBtn.textContent = isLast ? 'Ver resultado' : 'Siguiente';
+      prevBtn.disabled = currentIndex === 0;
+
+      document.querySelectorAll('.option-btn').forEach(button => {
+        button.addEventListener('click', () => {
+          const pickedType = button.dataset.type;
+          answers[currentIndex] = pickedType;
+          renderQuestion();
+        });
+      });
+    }
+
+    function determineWinner() {
+      const winner = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+      const topScore = winner[0][1];
+      const tied = winner.filter(([, score]) => score === topScore);
+
+      if (tied.length > 1 && !tieBreakUsed) {
+        tieBreakUsed = true;
+        showTieBreak();
+        return null;
+      }
+
+      return tied[0][0];
+    }
+
+    function showTieBreak() {
+      const tieOptions = tieBreakerQuestion.options;
+      quizContainer.innerHTML = `
+        <div class="question-card active">
+          <div class="question-number">Pregunta final</div>
+          <p class="question-text">${tieBreakerQuestion.text}</p>
+          <ul class="option-list">
+            ${tieOptions.map(option => `
+              <li class="option-item">
+                <button class="option-btn" type="button" data-type="${option.type}">${option.label}</button>
+              </li>
+            `).join('')}
+          </ul>
+        </div>
+      `;
+
+      progressEl.textContent = 'Desempate';
+      nextBtn.textContent = 'Ver resultado';
+      prevBtn.disabled = false;
+
+      document.querySelectorAll('.option-btn').forEach(button => {
+        button.addEventListener('click', () => {
+          const selected = button.dataset.type;
+          const split = selected.split('/');
+          const typesToAdd = split.map(item => item.trim());
+          typesToAdd.forEach(type => {
+            if (scores[type] !== undefined) scores[type] += 1;
+          });
+          showResult();
+        });
+      });
+    }
+
+    function showResult() {
+      const result = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+      const winner = result[0][0];
+      const max = result[0][1];
+      const top = result.filter(([, score]) => score === max);
+      const finalResult = top.length > 1 ? winner : winner;
+      const totalVotes = Object.values(scores).reduce((sum, value) => sum + value, 0) || 1;
+      const winnerPercent = Math.round((scores[winner] / totalVotes) * 100);
+
+      const descriptions = {
+        Naranja: 'Eres un michi sociable, alegre y muy expresivo. Te gusta estar en movimiento, recibir cariño y compartir la energía de la casa.',
+        Tuxedo: 'Eres un michi equilibrado y adaptable. Te llevas bien con casi todo el mundo y sabes mantener la calma sin drama.',
+        Negro: 'Eres un michi sereno, confiado y muy leal. Te gusta la seguridad, la rutina y la compañía de confianza.',
+        Tabby: 'Eres curioso, activo y enérgico. Siempre vas a investigar, explorar y llevar tu propia energía a cada rincón.',
+        Gris: 'Eres inteligente, observador y reservado. Te gusta la estabilidad, los lazos profundos y los momentos tranquilos.',
+        Tricolor: 'Eres un michi independiente con personalidad marcada. Tienes carácter, límites y una presencia difícil de ignorar.'
+      };
+
+      const resultText = descriptions[finalResult] || 'Tu perfil es muy especial y mezcla varios rasgos de varios tipos.';
+      const resultEntries = Object.entries(scores)
+        .filter(([, value]) => value > 0)
+        .sort((a, b) => b[1] - a[1]);
+
+      const quizSummary = {
+        finalResult,
+        winnerPercent,
+        totalVotes,
+        results: resultEntries.map(([type, value]) => ({
+          type,
+          value,
+          percent: Math.round((value / totalVotes) * 100)
+        }))
+      };
+
+      localStorage.setItem('michiQuizResult', JSON.stringify(quizSummary));
+
+      const resultMarkup = resultEntries.map(([type, value]) => {
+        const percent = Math.round((value / totalVotes) * 100);
+        return `
+          <article class="result-item">
+            <div class="result-badge">${type}</div>
+            <div class="result-title">${percent}% ${type}</div>
+            <p class="result-copy">${descriptions[type] || 'Tu perfil tiene matices de este tipo.'}</p>
+          </article>
+        `;
+      }).join('');
+
+      const colsClass = `cols-${resultEntries.length || 1}`;
+
+      quizContainer.innerHTML = '';
+      resultEl.classList.add('visible');
+      resultEl.innerHTML = `
+        <div class="result-stack ${colsClass}">${resultMarkup}</div>
+        <div class="result-actions">
+          <button type="button" class="nav-btn" id="result-next-btn">Siguiente</button>
+        </div>
+      `;
+      document.getElementById('result-next-btn').addEventListener('click', () => {
+        window.location.href = 'guardar.html';
+      });
+      quizControls.classList.add('hidden');
+      progressEl.textContent = 'Resultado final';
+      nextBtn.style.display = 'none';
+      prevBtn.style.display = 'none';
+    }
+
+    startQuizBtn.addEventListener('click', startQuiz);
+
+    nextBtn.addEventListener('click', () => {
+      if (!started) return;
+      if (answers[currentIndex] === undefined) return;
+
+      const selectedType = answers[currentIndex];
+      scores[selectedType] += 1;
+
+      if (currentIndex < questions.length - 1) {
+        currentIndex += 1;
+        renderQuestion();
+        return;
+      }
+
+      const winner = determineWinner();
+      if (winner) {
+        showResult();
+      }
+    });
+
+    prevBtn.addEventListener('click', () => {
+      if (!started) return;
+      if (currentIndex > 0) {
+        currentIndex -= 1;
+        renderQuestion();
+      }
+    });
+
+    renderQuestion();
+  </script>
+</body>
+</html>

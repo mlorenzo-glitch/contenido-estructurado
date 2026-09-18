@@ -12,12 +12,13 @@
   --color-text: #171717;
   --color-accent: #5b3df5;
 
-  --font-family-base: system-ui, Arial, Helvetica, sans-serif;
+  --font-family-base: 'Tenon', system-ui, Arial, Helvetica, sans-serif;
+  --font-family-head: 'Tenon', var(--font-family-base);
 
   --font-size-body: 1rem;
-  --font-size-h1: 3rem;
-  --font-size-h2: 2rem;
-  --font-size-h3: 1.25rem;
+  --font-size-h1: 3.2rem;
+  --font-size-h2: 2.2rem;
+  --font-size-h3: 1.4rem;
 }
 
 /*
@@ -66,14 +67,30 @@ body {
 
 h1 {
   font-size: var(--font-size-h1);
+  font-family: var(--font-family-head);
+  font-weight: 700;
 }
 
 h2 {
   font-size: var(--font-size-h2);
+  font-family: var(--font-family-head);
+  font-weight: 700;
 }
 
 h3 {
   font-size: var(--font-size-h3);
+  font-family: var(--font-family-head);
+  font-weight: 700;
+}
+
+header {
+  text-align: center;
+}
+
+h1,
+h2,
+h3 {
+  text-align: center;
 }
 
 
@@ -131,4 +148,11 @@ section {
 
 nav a {
   margin-right: 1rem;
+}
+
+header,
+header h1,
+header p {
+  font-family: "neulis-cursive", "Tenon", system-ui, Arial, Helvetica, sans-serif;
+  font-weight: 700;
 }

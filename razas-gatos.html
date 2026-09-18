@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Razas de gatos agrupadas por tipo de pelaje y personalidad.">
+  <title>Michis Astrales</title>
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="https://use.typekit.net/qzj8zld.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    .profile-fab {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 52px;
+      height: 52px;
+      border: 1px solid #e7e1d8;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 8px 24px rgba(23, 23, 23, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 30;
+    }
+
+    .profile-fab svg {
+      width: 24px;
+      height: 24px;
+      fill: #171717;
+    }
+
+    .home-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 52px;
+      height: 52px;
+      border: 1px solid #e7e1d8;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 8px 24px rgba(23, 23, 23, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 30;
+      text-decoration: none;
+    }
+
+    .home-btn svg {
+      width: 24px;
+      height: 24px;
+      fill: #171717;
+    }
+
+    .profile-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: min(360px, calc(100vw - 24px));
+      height: 100vh;
+      background: #fff;
+      border-left: 1px solid #e7e1d8;
+      box-shadow: -18px 0 36px rgba(23, 23, 23, 0.12);
+      transform: translateX(110%);
+      transition: transform 0.22s ease;
+      z-index: 40;
+      padding: 24px 20px 20px;
+    }
+
+    .profile-panel.visible {
+      transform: translateX(0);
+    }
+
+    .profile-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .profile-panel-title {
+      margin: 0;
+      font-family: 'neulis-cursive', 'Tenon', system-ui, Arial, Helvetica, sans-serif;
+      font-size: 2rem;
+    }
+
+    .close-panel {
+      border: 1px solid #e7e1d8;
+      border-radius: 999px;
+      background: transparent;
+      color: #171717;
+      width: 34px;
+      height: 34px;
+      padding: 0;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .profile-field {
+      background: #f0ece6;
+      border: 1px solid #e7e1d8;
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+    }
+
+    .profile-field-label {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #4a4a4a;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .profile-field-value {
+      margin: 0;
+      font-size: 1.05rem;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    .logout-btn {
+      width: 100%;
+      margin-top: 10px;
+      border: none;
+      border-radius: 999px;
+      background: #171717;
+      color: #fff;
+      padding: 0.9rem 1.2rem;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <a href="home.html" class="home-btn" aria-label="Volver a home">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 3.2l8.5 7.2h-2.6V20h-5.1v-5.2H11.2V20H6.1v-9.6H3.5L12 3.2zm0 2.6L6.6 9.8H8v8.5h2.8v-5.2h2.4v5.2H16v-8.5h1.4L12 5.8z"/>
+    </svg>
+  </a>
+
+  <button id="profile-fab" class="profile-fab" type="button" aria-label="Abrir perfil">
+    <svg viewBox="0 0 64 64" aria-hidden="true">
+      <path d="M30.2 9.7c-3.6 0-6.5 2.9-6.5 6.5 0 2.6 1.5 4.8 3.8 5.8-7 2.5-12 9.4-12 17.5 0 1.7 1.4 3.1 3.1 3.1h31.3c1.7 0 3.1-1.4 3.1-3.1 0-8.1-5-15-12-17.5 2.3-1 3.8-3.2 3.8-5.8 0-3.6-2.9-6.5-6.5-6.5-2.1 0-4 1-5.2 2.6-1.2-1.6-3.1-2.6-5.2-2.6Zm7.9 10.5c0 2.8-2.3 5-5.1 5-2.8 0-5.1-2.2-5.1-5 0-2.8 2.3-5 5.1-5s5.1 2.2 5.1 5Zm-16.5 16.1c1.5-4.4 5.7-7.6 10.7-7.6s9.2 3.2 10.7 7.6H21.6Z"/>
+    </svg>
+  </button>
+
+  <aside id="profile-panel" class="profile-panel" aria-live="polite">
+    <div class="profile-panel-header">
+      <h2 class="profile-panel-title">Mi perfil</h2>
+      <button id="close-panel" class="close-panel" type="button" aria-label="Cerrar panel">×</button>
+    </div>
+
+    <div class="profile-field">
+      <span class="profile-field-label">Correo</span>
+      <p id="profile-email" class="profile-field-value">—</p>
+    </div>
+
+    <div class="profile-field">
+      <span class="profile-field-label">Raza de gato</span>
+      <p id="profile-breed" class="profile-field-value">—</p>
+    </div>
+
+    <button id="logout-btn" class="logout-btn" type="button">Cerrar sesión</button>
+  </aside>
+
+  <header>
+    <h1>Michis Astrales</h1>
+    <p>Catálogo agrupado por tipo de pelaje y personalidad</p>
+  </header>
+
+  <main>
+    <section id="intro">
+      <h2>Catálogo general</h2>
+      <p>Este catálogo reúne todas las razas de gatos existentes organizadas por grupos para facilitar la consulta y la comparación entre tipos de pelaje, temperamento y características distintivas</p>
+    </section>
+
+    <section id="clasesicas-pelo-corto">
+      <h2>Razas clásicas de pelo corto</h2>
+      <ul>
+        <li><strong>Abisinio</strong>: Activo, curioso, inteligente, necesita estimulación mental y física constante; ágil trepador.</li>
+        <li><strong>American Shorthair</strong>: Equilibrado, independiente, buen cazador, se adapta bien a cambios, poco exigente.</li>
+        <li><strong>American Wirehair</strong>: Tranquilo, cariñoso, adaptable, de temperamento fácil, poco demandante.</li>
+        <li><strong>Británico de Pelo Corto</strong>: Tranquilo, afable, independiente sin ser distante, temperamento muy stable.</li>
+        <li><strong>Chartreux</strong>: Callado, independiente, paciente, lealtad silenciosa, comportamiento casi disciplinado.</li>
+        <li><strong>Egyptian Mau</strong>: Veloz, ágil, leal a su familia, desconfiado con extraños, gran instinto cazador.</li>
+        <li><strong>Ruso Azul</strong>: Tímido con desconocidos, extremadamente apegado a su rutina, reservado pero fiel.</li>
+        <li><strong>Korat</strong>: Sensible, observador, muy apegado a su humano, no tolera bien los cambios bruscos.</li>
+        <li><strong>Habana (Havana Brown)</strong>: Curioso, sociable, usa mucho sus patas para investigar, afectuoso.</li>
+        <li><strong>Singapura</strong>: Juguetón, extrovertido, muy activo pese a su tamaño, sociable con la familia.</li>
+      </ul>
+    </section>
+
+    <section id="orientales-vocales">
+      <h2>Razas orientales / vocales</h2>
+      <ul>
+        <li><strong>Siamés</strong>: Platicador, le gusta la compañía, muy inteligente, exige atención, se apega fuertemente a su humano.</li>
+        <li><strong>Oriental de Pelo Corto</strong>: Extremadamente activo, curioso, vocal, se estresa si le falta estimulación.</li>
+        <li><strong>Oriental de Pelo Largo</strong>: Igual de sociable que su versión de pelo corto, cariñoso, necesita interacción constante.</li>
+        <li><strong>Balinés</strong>: Elegante, vocal aunque más suave que el Siamés, sociable, muy unido a su familia.</li>
+        <li><strong>Tailandés (Thai)</strong>: Cariñoso, comunicativo, inteligente, forma vínculos muy fuertes con una persona.</li>
+        <li><strong>Tonkinés</strong>: Energético, sociable, mezcla la vocalidad del Siamés con la calidez del Burmés.</li>
+        <li><strong>Burmés</strong>: Cariñoso, sigue a su humano por toda la casa, juguetón, no le gusta estar solo.</li>
+        <li><strong>Birmilla</strong>: Dulce, curioso, más tranquilo que otras orientales, sociable pero sin ser demandante.</li>
+      </ul>
+    </section>
+
+    <section id="gentle-giants">
+      <h2>Razas grandes / "gentle giants"</h2>
+      <ul>
+        <li><strong>Maine Coon</strong>: Sociable, juguetón, gran tamaño y presencia, le encanta la atención pero también es independiente.</li>
+        <li><strong>Maine Coon Polydactyl</strong>: Mismo temperamento gentil del Maine Coon, suele ser aún más hábil con las "patas extra".</li>
+        <li><strong>Noruego de Bosque</strong>: Resistente, aventurero, buen trepador, independiente pero afectuoso con su círculo cercano.</li>
+        <li><strong>Siberiano</strong>: Leal, juguetón, atlético, buen saltador, se lleva bien con niños y otras mascotas.</li>
+        <li><strong>Ragdoll</strong>: Dócil, cariñoso, se relaja completamente al cargarlo, muy dependiente emocionalmente.</li>
+        <li><strong>Chausie</strong>: Enérgico, atlético, necesita mucho espacio y ejercicio, vínculo intenso con su familia.</li>
+        <li><strong>Highlander</strong>: Juguetón, curioso, sociable, conserva un aire "salvaje" pero es de trato fácil.</li>
+      </ul>
+    </section>
+
+    <section id="exoticas-salvaje">
+      <h2>Razas exóticas con patrón salvaje</h2>
+      <ul>
+        <li><strong>Bengalí</strong>: Hiperactivo, atlético, territorial, le encanta trepar y cazar, necesita estimulación constante.</li>
+        <li><strong>Bengalí de Pelo Largo</strong>: Mismo temperamento activo y curioso, ligeramente más tranquilo en apariencia.</li>
+        <li><strong>Savannah</strong>: Muy activo, curioso, atlético, necesita mucho espacio, forma vínculos intensos y casi "de perro".</li>
+        <li><strong>Ocicat</strong>: Sociable, inteligente, entrenable, le gusta interactuar y jugar en equipo.</li>
+        <li><strong>Toyger</strong>: Juguetón, amigable, curioso, disfruta la atención pero no es exigente.</li>
+        <li><strong>Serengeti</strong>: Alerta, vocal, atlético, muy activo y necesita estímulos constantes.</li>
+      </ul>
+    </section>
+
+    <section id="pelo-largo-semilargo">
+      <h2>Razas de pelo largo / semi-largo</h2>
+      <ul>
+        <li><strong>Persa</strong>: Tranquilo, afectuoso a su manera, sedentario, necesita cuidados constantes y ambientes calmados.</li>
+        <li><strong>Himalayo</strong>: Tranquilo, algo exigente en cuidados, cariñoso pero selectivo, sensible a cambios en su entorno.</li>
+        <li><strong>Exótico de Pelo Corto</strong>: Cariñoso, tranquilo, algo dependiente, disfruta la compañía constante.</li>
+        <li><strong>British Longhair</strong>: Sereno, afectuoso, independiente, de temperamento muy stable.</li>
+        <li><strong>Turco Angora</strong>: Inteligente, activo, curioso, muy vocal y apegado a su humano favorito.</li>
+        <li><strong>Turco Van</strong>: Atípico, activo, le encanta el agua, independiente y de energía impredecible.</li>
+        <li><strong>Nebelung</strong>: Tímido con extraños, muy leal y cariñoso con su familia cercana, tranquilo.</li>
+        <li><strong>Cymric</strong>: Juguetón, sociable, versión de pelo largo del Manx, buen saltador.</li>
+      </ul>
+    </section>
+
+    <section id="sin-pelo-atipico">
+      <h2>Razas sin pelo o con pelaje atípico</h2>
+      <ul>
+        <li><strong>Sphynx</strong>: Extremadamente afectuoso, exigente de atención, intenso en su vínculo, nada indiferente.</li>
+        <li><strong>Donskoy</strong>: Cariñoso, inteligente, sociable, busca contacto físico constante con su humano.</li>
+        <li><strong>Peterbald</strong>: Curioso, sociable, activo, similar en personalidad al Oriental por su ascendencia.</li>
+        <li><strong>Lykoi</strong>: Curioso, cauteloso al inicio pero cariñoso una vez que confía, conserva instintos algo "salvajes".</li>
+      </ul>
+    </section>
+
+    <section id="rex">
+      <h2>Razas de pelo rizado (Rex)</h2>
+      <ul>
+        <li><strong>Devon Rex</strong>: Travieso, juguetón, extrovertido, energía casi de duende y curiosidad sin límites.</li>
+        <li><strong>Cornish Rex</strong>: Hiperactivo, atlético, muy vinculado a su humano, casi obsesivo por explorar cada rincón.</li>
+        <li><strong>Selkirk Rex</strong>: Tranquilo, paciente, tolerante, buen carácter con niños y otras mascotas.</li>
+        <li><strong>Selkirk Rex Pelo Largo</strong>: Mismo temperamento calmado, algo más independiente en apariencia.</li>
+        <li><strong>LaPerm</strong>: Cariñoso, curioso, sociable, le gusta "ayudar" en las actividades de la casa.</li>
+        <li><strong>LaPerm Pelo Corto</strong>: Mismo carácter afectuoso y curioso que su versión de pelo largo.</li>
+        <li><strong>Tennessee Rex</strong>: Poco documentada, pero reportada como sociable y de trato fácil.</li>
+      </ul>
+    </section>
+
+    <section id="orejas-cola-distintiva">
+      <h2>Razas de orejas / cola distintiva</h2>
+      <ul>
+        <li><strong>Escocés Plegado (Scottish Fold)</strong>: Tranquilo, adaptable, poco exigente, carácter dulce y algo reservado.</li>
+        <li><strong>Escocés Recto (Scottish Straight)</strong>: Mismo temperamento tranquilo y dulce del Fold, sin la mutación de orejas.</li>
+        <li><strong>American Curl</strong>: Afectuoso, juguetón, mantiene comportamiento de gatito toda su vida, sociable.</li>
+        <li><strong>American Curl Pelo Largo</strong>: Mismo carácter juguetón y afectuoso.</li>
+        <li><strong>Manx</strong>: Leal, juguetón, buen saltador, se apega fuertemente a su familia.</li>
+        <li><strong>Manx Tailed</strong>: Mismo temperamento leal del Manx, con cola presente.</li>
+        <li><strong>Japanese Bobtail</strong>: Activo, vocal, sociable, considerado de "buena suerte" en la cultura japonesa.</li>
+        <li><strong>Japanese Bobtail Pelo Largo</strong>: Mismo carácter activo y sociable.</li>
+        <li><strong>American Bobtail</strong>: Inteligente, juguetón, muy adaptable, buen compañero de niños.</li>
+        <li><strong>American Bobtail Shorthair</strong>: Mismo temperamento adaptable y juguetón.</li>
+        <li><strong>Kurilian Bobtail</strong>: Independiente, buen cazador, leal a su familia.</li>
+        <li><strong>Kurilian Bobtail Pelo Largo</strong>: Mismo carácter independiente y cazador.</li>
+        <li><strong>Pixiebob</strong>: De comportamiento casi "canino", leal, entrenable, sigue a su humano.</li>
+        <li><strong>Pixiebob Pelo Largo</strong>: Mismo temperamento leal y entrenable.</li>
+        <li><strong>Toybob</strong>: Sociable, cariñoso, de tamaño pequeño pero personalidad grande.</li>
+      </ul>
+    </section>
+
+    <section id="patas-cortas">
+      <h2>Razas de patas cortas</h2>
+      <ul>
+        <li><strong>Munchkin</strong>: Juguetón, curioso, ágil pese a sus patas cortas, sociable y activo.</li>
+        <li><strong>Munchkin Pelo Largo</strong>: Mismo carácter juguetón y curioso.</li>
+        <li><strong>Minuet</strong>: Dulce, sociable, tranquilo, buen compañero para casas con niños.</li>
+        <li><strong>Minuet Pelo Largo</strong>: Mismo temperamento dulce y sociable.</li>
+        <li><strong>Minuet Talls</strong>: Igual de sociable, con patas de longitud estándar.</li>
+      </ul>
+    </section>
+
+    <section id="otras-notables">
+      <h2>Otras razas notables</h2>
+      <ul>
+        <li><strong>Bombay</strong>: Sigiloso, afectuoso con su elegido, algo posesivo, disfruta la atención en sus propios términos.</li>
+        <li><strong>Burmilla</strong>: Dulce, curioso, tranquilo.</li>
+        <li><strong>Burmilla Pelo Largo</strong>: Mismo temperamento dulce.</li>
+        <li><strong>Australian Mist</strong>: Sociable, tolerante, buen carácter familiar, se adapta bien a la vida en interiores.</li>
+        <li><strong>Khaomanee</strong>: Alerta, curioso, muy vocal, considerado de "buena suerte" en Tailandia.</li>
+        <li><strong>Cherubim</strong>: Raza en desarrollo, reportada como dócil y afectuosa.</li>
+        <li><strong>Snowshoe</strong>: Sociable, vocal por herencia siamesa, cariñoso, le gusta seguir a su humano.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Catálogo de razas diseñado para consulta rápida y estructura visual similar a la página principal.</p>
+  </footer>
+
+  <script>
+    const profileFab = document.getElementById('profile-fab');
+    const profilePanel = document.getElementById('profile-panel');
+    const closePanelBtn = document.getElementById('close-panel');
+    const profileEmail = document.getElementById('profile-email');
+    const profileBreed = document.getElementById('profile-breed');
+    const logoutBtn = document.getElementById('logout-btn');
+
+    function renderSessionPanel() {
+      const session = JSON.parse(localStorage.getItem('michiCurrentSession') || 'null');
+      const breed = JSON.parse(localStorage.getItem('michiBreed') || 'null');
+
+      const email = session && session.email ? session.email : 'No hay sesión activa';
+      const breedName = (breed && breed.name) || (session && session.breed) || 'No disponible';
+
+      profileEmail.textContent = email;
+      profileBreed.textContent = breedName;
+    }
+
+    function openPanel() {
+      renderSessionPanel();
+      profilePanel.classList.add('visible');
+    }
+
+    function closePanel() {
+      profilePanel.classList.remove('visible');
+    }
+
+    profileFab.addEventListener('click', openPanel);
+    closePanelBtn.addEventListener('click', closePanel);
+    profilePanel.addEventListener('click', (event) => {
+      if (event.target === profilePanel) closePanel();
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('michiCurrentSession');
+      localStorage.removeItem('michiBreed');
+      localStorage.removeItem('michiQuizResult');
+      window.location.href = 'inicio.html';
+    });
+
+    renderSessionPanel();
+  </script>
+
+</body>
+</html>
