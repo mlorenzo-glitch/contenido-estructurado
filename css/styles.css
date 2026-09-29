@@ -50,6 +50,27 @@ body.home {
 
 body.razas-gatos {
     background-image: var(--background-catalogo);
+    .card {
+         width: 300px;
+         border: 1px solid #ccc;
+         border-radius: 8px;
+         display: flex;
+         flex-direction: column;
+         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+         overflow: hidden;
+        }
+
+.card-content {
+  padding: 16px;
+  flex-grow: 1;
+}
+
+.card-footer {
+  padding: 12px 16px;
+  background-color: #f7f7f7;
+  border-top: 1px solid #eee;
+}
+
 }
 
 h1 {
