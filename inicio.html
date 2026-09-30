@@ -1,81 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <h1>Michis Astrales</h1>
+  <meta charset="UTF-8">  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Michis Astrales — portada: descubre tu raza gatuna según tu fecha.">
-  <title>Michis Astrales — Portada</title>
   <link rel="icon" href="favicon.ico">
   <link rel="stylesheet" href="https://use.typekit.net/qzj8zld.css">
-  <link rel="stylesheet" href="styles.css">
-  <style>
-    html, body {
-      margin: 0;
-      min-height: 100%;
-      height: 100%;
-    }
-
-    body {
-      background-color: #111;
-      background-image: url('./img/fondo3.png');
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      scroll-behavior: smooth;
-    }
-
-    .top-header {
-      display: none;
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      width: 100%;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-      box-shadow: 0 10px 24px rgba(17, 17, 17, 0.12);
-      transition: all 0.2s ease;
-    }
-
-    .top-header__inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 1rem 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .top-header__brand {
-      margin: 0;
-      font-family: 'neulis-cursive', 'Tenon', system-ui, Arial, Helvetica, sans-serif;
-      font-size: clamp(1.6rem, 3vw, 2.3rem);
-      line-height: 1;
-      color: #ffffff;
-      letter-spacing: 0.02em;
-    }
-
-    .hero-title {
-      color: #ffffff;
-    }
-
-    main {
-      background: transparent;
-      padding-top: 1.5rem;
-    }
-  </style>
+  <link rel="stylesheet" href="./css/styles.css">
 </head>
-<body>
-  <header id="top-header" class="top-header" aria-label="Cabecera principal">
-    <div class="top-header__inner">
-      <h2 class="top-header__brand">Michis Astrales</h2>
-    </div>
-  </header>
 
-  <main style="min-height:100vh; display:flex; align-items:center; justify-content:center; padding:2rem;">
+<body class="inicio">
+  <main style="min-height:100vh; display:flex; align-items:center; justify-content:center;">
+    
     <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px; width:100%;">
-      <section id="hero" style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; text-align:center;">
+      <section id="pt1" style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; text-align:center;">
         <h1 class="hero-title" style="margin:0; font-family:'neulis-cursive', 'Tenon', system-ui, Arial, Helvetica, sans-serif; font-weight:700; font-size:3.4rem; line-height:1;">Michis Astrales</h1>
         <button id="start-btn" type="button" style="padding:0.9rem 2rem; border:none; border-radius:999px; background:#171717; color:#fff; font-family:'Tenon', system-ui, Arial, Helvetica, sans-serif; font-weight:700; font-size:1rem; cursor:pointer;">Empezar</button>
       </section>
@@ -293,7 +232,7 @@
   }
 
   document.getElementById('start-btn').addEventListener('click', () => {
-    const hero = document.getElementById('hero');
+    const hero = document.getElementById('pt1');
     const input = document.getElementById('input');
     const header = document.getElementById('top-header');
 

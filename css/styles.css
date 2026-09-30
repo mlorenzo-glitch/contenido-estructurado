@@ -4,17 +4,20 @@
     --font-body: 'Tenon', system-ui, Arial, Helvetica, sans-serif;
     --font-card: 'neulis-cursive', 'Tenon', system-ui, Arial, Helvetica, sans-serif;
 
-    --background-inicio: url('./fondo3.png');
-    --background-quiz: url('./fondo4.png');
-    --background-pareja: url('./fondo5.png');
-    --background-home: url('./fondo1.png');
-    --background-catalogo: url('./fondo2.png');
-    --background-carta: url('./fondo6.png');
+    --text: #ffffff;
+    --text-card: #111;
+
+    --background-inicio: url('../img/fondo3.png');
+    --background-quiz: url('../img/fondo4.png');
+    --background-pareja: url('../img/fondo5.png');
+    --background-home: url('../img/fondo1.png');
+    --background-catalogo: url('../img/fondo2.png');
+    --background-carta: url('../img/fondo6.png');
 }
 
 * { box-sizing: border-box; }
 
-header {
+head{
     line-height: normal;
     font-family: var(--font-header);
     text-align: center;
@@ -22,13 +25,13 @@ header {
 }
 
 body {
-    margin: 0;
+    margin-left: 90px;
+    margin-right: 90px;
     padding: 0;
-    background-color: var(--bg);
-    background-image: var(--background-home);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+    scroll-behavior: smooth;
     font-family: var(--font-body);
     color: var(--text);
 }
@@ -40,6 +43,7 @@ body.inicio {
 body.quiz {
     background-image: var(--background-quiz);
 }
+
 body.pareja {
     background-image: var(--background-pareja);
 }
@@ -50,28 +54,39 @@ body.home {
 
 body.razas-gatos {
     background-image: var(--background-catalogo);
+    text-align: center;
+    .grid-cards-tipos {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 5px;
+        padding: 20px;
+    }
+    
     .card {
-         width: 300px;
-         border: 1px solid #ccc;
-         border-radius: 8px;
+         width: 200px;
+         background-color: #f2e8db;
+         border: 1px solid #ccc4ba;
+         border-radius: 25px;
          display: flex;
-         flex-direction: column;
+         flex-direction:column;
          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
          overflow: hidden;
-        }
+         color: var(--text-card);
+         font-family: var(--font-card);
+         font-size: 10px;
+         img{
+            width: 170px;
+            height: 200px;
+            border-radius: 25px;
+         }
+    }    
+}
 
 .card-content {
-  padding: 16px;
+  padding: 7px;
   flex-grow: 1;
 }
 
-.card-footer {
-  padding: 12px 16px;
-  background-color: #f7f7f7;
-  border-top: 1px solid #eee;
-}
-
-}
 
 h1 {
     font-family: var(--font-header);
