@@ -38,6 +38,186 @@ body {
 
 body.inicio {
     background-image: var(--background-inicio);
+
+    .Empezar{
+        margin-top: 0;
+        padding: 0;
+        box-sizing: border-box;
+        width: 100%;
+        min-height: 100vh;
+        display:flex;
+        flex-direction: column; 
+        justify-content:center;
+        align-items:center; 
+        gap:20px;
+
+        h1{
+            font-family: var(--font-header);
+            font-weight:200px;
+            text-align: center; 
+            align-items: center;
+            padding: 100px;
+            margin: 0 auto;
+        }
+
+        .start-btn{
+            align-items: center;
+            padding:0;
+            background: transparent !important;
+            border: none;
+            box-shadow: none;
+            border-radius: 0;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+
+            &:hover,
+            &:focus,
+            &:active {
+                background: transparent !important;
+                outline: none;
+                box-shadow: none;
+            }
+
+            img {
+                display: block;
+                max-width: 100%;
+                background: transparent;
+            }
+        }
+    }
+
+    .Fecha.nacimiento{
+        margin-top: 0;
+        padding: 0;
+        box-sizing: border-box;
+        min-height: 100vh;
+        width: min(100%, 420px);
+        display:flex;
+        flex-direction: column; 
+        justify-content:center;
+        align-items:center; 
+        gap:20px;
+        font-family: var(--font-header);
+        font-weight:200px;
+        text-align: center;            
+        padding: 1rem;
+        margin: 0 auto;
+    }
+
+    .Fecha.nacimiento #go,
+    .Fecha.nacimiento button {
+        background: transparent !important;
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    .Fecha.nacimiento #go:hover,
+    .Fecha.nacimiento #go:focus,
+    .Fecha.nacimiento #go:active,
+    .Fecha.nacimiento button:hover,
+    .Fecha.nacimiento button:focus,
+    .Fecha.nacimiento button:active {
+        background: transparent !important;
+        outline: none;
+        box-shadow: none;
+    }
+
+    .Resultado.astral {
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+        box-sizing: border-box;
+    }
+
+    .resultado-card {
+        width: min(900px, 90vw);
+        background: rgba(255,255,255,0.10);
+        border: 1px solid rgba(255,255,255,0.25);
+        border-radius: 24px;
+        box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+        padding: 24px;
+        color: var(--text);
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .resultado-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .resultado-badge {
+        display: inline-block;
+        padding: 0.35rem 0.8rem;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.12);
+        font-size: 0.8rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        font-family: var(--font-body);
+    }
+
+    .resultado-header h2 {
+        margin: 0;
+        font-family: var(--font-header);
+        text-align: center;
+    }
+
+    .resultado-body {
+        display: flex;
+        align-items: flex-start;
+        gap: 24px;
+    }
+
+    .resultado-imagen-wrap {
+        flex: 0 0 40%;
+    }
+
+    .resultado-imagen-wrap img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 14px;
+    }
+
+    .resultado-texto {
+        flex: 1;
+        text-align: left;
+    }
+
+    .resultado-texto h3 {
+        font-family: var(--font-header);
+        margin: 0 0 8px;
+        font-size: 1.2rem;
+    }
+
+    .resultado-texto p,
+    .resultado-signo,
+    .resultado-texto div {
+        font-family: var(--font-body);
+        line-height: 1.5;
+        margin: 0 0 14px;
+        text-align: left;
+    }
+
+    .resultado-btn {
+        background: transparent !important;
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
+        padding: 0;
+        cursor: pointer;
+    }
 }
 
 body.quiz {
@@ -86,7 +266,6 @@ body.razas-gatos {
   padding: 7px;
   flex-grow: 1;
 }
-
 
 h1 {
     font-family: var(--font-header);
