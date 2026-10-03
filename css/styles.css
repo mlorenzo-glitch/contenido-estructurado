@@ -74,6 +74,7 @@ body.inicio {
             cursor: pointer;
             appearance: none;
             -webkit-appearance: none;
+            
 
             &:hover,
             &:focus,
@@ -102,8 +103,9 @@ body.inicio {
         justify-content:center;
         align-items:center; 
         gap:20px;
-        font-family: var(--font-header);
-        font-weight:200px;
+        font-family: var(--font-body);
+        font-size: 25px;
+        font-style: bold;
         text-align: center;            
         padding: 1rem;
         margin: 0 auto;
@@ -117,6 +119,7 @@ body.inicio {
         border-radius: 0;
         padding: 0;
         cursor: pointer;
+        
     }
 
     .Fecha.nacimiento #go:hover,
@@ -221,6 +224,7 @@ body.inicio {
         border-radius: 0;
         padding: 0;
         cursor: pointer;
+
     }
 }
 
@@ -274,15 +278,13 @@ body.quiz {
                 background: transparent !important;
                 outline: none;
                 box-shadow: none;
-            
             }
             }
-
 
             img {
                 display: block;
                 max-width: 100%;
-                background: transparent;
+                background: transparent !important;
             }
         }
     
@@ -314,7 +316,7 @@ body.quiz {
              gap: 10px;
             }
         
-        .next-btn{
+        .quiz-next-btn{
             align-items: center;
             padding:0;
             background: transparent !important;
@@ -332,7 +334,13 @@ body.quiz {
                 outline: none;
                 box-shadow: none;
             }
-        }  
+            }
+
+            img {
+                display: block;
+                max-width: 100%;
+                background: transparent !important;
+            }
     } 
 }
 
