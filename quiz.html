@@ -10,22 +10,24 @@
 </head>
 <body class="quiz">
   <main class="quiz-main">
-    <section class="quiz-intro" id="intro-screen">
-        <h1 class="intro-title">¿Qué tipo de michi eres?</h1>
-        <p class="intro-copy">Responde las siguientes preguntas para saber qué tipo de gato es tu personalidad.</p>
-        <button id="start-quiz-btn" class="start-btn" type="button">
-          <img src="./img/Patita_blanca.png" alt="Empezar">
-        </button>
+    <section class="quiz-intro" id="intro-screen">      
+      <h1 class="intro-title">¿Qué tipo de michi eres?</h1>
+      <p class="intro-copy">
+        Responde las siguientes preguntas para saber qué tipo de gato es tu personalidad.
+      </p>
+
+      <button id="start-quiz-btn" class="start-btn" type="button">
+        <img src="./img/Patita_blanca.png" alt="Empezar">
+      </button>
     </section>
 
-    <section class="quiz-questions" id="quiz-section">
-      <div id="quiz"></div>
 
+    <section class="quiz-questions hidden" id="quiz-section">
+      <div id="quiz"></div>
       <div id="quiz-controls" class="controls hidden">
-        <div class="controls-actions">
-          <button id="prev-btn" class="nav-btn secondary" type="button" disabled>Anterior</button>
-          <button id="next-btn" class="nav-btn" type="button">Siguiente</button>
-        </div>
+        <button id="next-btn" class="quiz-next-btn" type="button">
+            <img src="./img/Patita_blanca.png" alt="Siguiente">
+        </button>
       </div>
     </section>
 
@@ -148,24 +150,24 @@
     const quizControls = document.getElementById('quiz-controls');
     const quizContainer = document.getElementById('quiz');
     const nextBtn = document.getElementById('next-btn');
-    const prevBtn = document.getElementById('prev-btn');
     const resultEl = document.getElementById('result');
     const startQuizBtn = document.getElementById('start-quiz-btn');
+    const quizSection = document.getElementById('quiz-section');
 
     function startQuiz() {
       started = true;
-      introScreen.style.display = 'none';
-      quizSection.style.display = 'block';
+      introScreen.classList.add('hidden');
+      quizSection.classList.remove('hidden');
+      quizControls.classList.remove('hidden');
       renderQuestion();
-      startQuizBtn.addEventListener('click', startQuiz);
     }
 
+
     function renderQuestion() {
-
-  const question = questions[currentIndex];
-
-  quizContainer.innerHTML = `
-    <div class="question-card">
+      const question = questions[currentIndex];
+      
+      quizContainer.innerHTML = `
+      <div class="question-card">
 
       <div class="question-number">
         Pregunta ${currentIndex + 1}
@@ -186,12 +188,11 @@
           >
             ${option.label}
           </button>
-
-        `).join('')}
-
+          
+          `).join('')}
+          </div>
+          
       </div>
-
-    </div>
   `;
 
   // Activar botones de respuesta
@@ -213,7 +214,6 @@
   });
 }
     
-
     function determineWinner() {
       const winner = Object.entries(scores).sort((a, b) => b[1] - a[1]);
       const topScore = winner[0][1];
@@ -245,7 +245,6 @@
       `;
 
       nextBtn.textContent = 'Ver resultado';
-      prevBtn.disabled = false;
 
       document.querySelectorAll('.option-btn').forEach(button => {
         button.addEventListener('click', () => {
@@ -323,40 +322,35 @@
       quizControls.classList.add('hidden');
       progressEl.textContent = 'Resultado final';
       nextBtn.style.display = 'none';
-      prevBtn.style.display = 'none';
     }
 
     startQuizBtn.addEventListener('click', startQuiz);
-
+    
     nextBtn.addEventListener('click', () => {
-      if (!started) return;
-      if (answers[currentIndex] === undefined) return;
+  if (!started) return;
 
-      const selectedType = answers[currentIndex];
-      scores[selectedType] += 1;
+  // No avanzar si no se ha seleccionado una respuesta
+  if (answers[currentIndex] === undefined) return;
 
-      if (currentIndex < questions.length - 1) {
-        currentIndex += 1;
-        renderQuestion();
-        return;
-      }
+  // Sumar la respuesta seleccionada
+  const selectedType = answers[currentIndex];
+  scores[selectedType] += 1;
 
-      
-      const winner = determineWinner();
-      if (winner) {
-        showResult();
-      }
-    });
-
-    prevBtn.addEventListener('click', () => {
-      if (!started) return;
-      if (currentIndex > 0) {
-        currentIndex -= 1;
-        renderQuestion();
-      }
-    });
-
+  // Si todavía hay preguntas, pasar a la siguiente
+  if (currentIndex < questions.length - 1) {
+    currentIndex++;
     renderQuestion();
+    return;
+  }
+
+  // Si ya fue la última pregunta, mostrar resultado
+  const winner = determineWinner();
+
+  if (winner) {
+    showResult();
+  }
+});
+
   </script>
 </body>
 </html>
