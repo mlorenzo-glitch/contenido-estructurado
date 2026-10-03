@@ -1,34 +1,35 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <h1>Michis Astrales</h1>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quiz</title>
   <link rel="icon" href="favicon.ico" />
   <link rel="stylesheet" href="https://use.typekit.net/qzj8zld.css" />
   <link rel="stylesheet" href="./css/styles.css" />
-  <link rel="stylesheet" href="./css/quiz.css" />
 </head>
-<body>
-  <main>
-    <section class="quiz-shell">
-      <div id="intro-screen" class="intro-screen">
-        <div class="eyebrow">Quiz</div>
+<body class="quiz">
+  <main class="quiz-main">
+    <section class="quiz-intro" id="intro-screen">
         <h1 class="intro-title">¿Qué tipo de michi eres?</h1>
         <p class="intro-copy">Responde las siguientes preguntas para saber qué tipo de gato es tu personalidad.</p>
-        <button id="start-quiz-btn" class="start-btn" type="button">Empezar</button>
-      </div>
+        <button id="start-quiz-btn" class="start-btn" type="button">
+          <img src="./img/Patita_blanca.png" alt="Empezar">
+        </button>
+    </section>
 
+    <section class="quiz-questions" id="quiz-section">
       <div id="quiz"></div>
 
       <div id="quiz-controls" class="controls hidden">
-        <div id="progress" class="progress-text">Pregunta 1 de 8</div>
-        <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
+        <div class="controls-actions">
           <button id="prev-btn" class="nav-btn secondary" type="button" disabled>Anterior</button>
           <button id="next-btn" class="nav-btn" type="button">Siguiente</button>
         </div>
       </div>
+    </section>
 
+    <section class="quiz-result" id="result-section">
       <div id="result" class="result-card" aria-live="polite"></div>
     </section>
   </main>
@@ -148,53 +149,70 @@
     const quizContainer = document.getElementById('quiz');
     const nextBtn = document.getElementById('next-btn');
     const prevBtn = document.getElementById('prev-btn');
-    const progressEl = document.getElementById('progress');
     const resultEl = document.getElementById('result');
     const startQuizBtn = document.getElementById('start-quiz-btn');
 
     function startQuiz() {
       started = true;
-      introScreen.classList.add('hidden');
-      quizControls.classList.remove('hidden');
+      introScreen.style.display = 'none';
+      quizSection.style.display = 'block';
       renderQuestion();
+      startQuizBtn.addEventListener('click', startQuiz);
     }
 
     function renderQuestion() {
-      if (!started) return;
-      const question = questions[currentIndex];
-      const isLast = currentIndex === questions.length - 1;
-      const selectedType = answers[currentIndex];
 
-      quizContainer.innerHTML = `
-        <div class="question-card active">
-          <div class="question-number">Pregunta ${currentIndex + 1}</div>
-          <p class="question-text">${question.text}</p>
-          <ul class="option-list">
-            ${question.options.map((option, index) => `
-              <li class="option-item">
-                <button
-                  class="option-btn ${selectedType === option.type ? 'selected' : ''}"
-                  type="button"
-                  data-index="${index}"
-                  data-type="${option.type}"
-                >${option.label}</button>
-              </li>
-            `).join('')}
-          </ul>
-        </div>
-      `;
+  const question = questions[currentIndex];
 
-      nextBtn.textContent = isLast ? 'Ver resultado' : 'Siguiente';
-      prevBtn.disabled = currentIndex === 0;
+  quizContainer.innerHTML = `
+    <div class="question-card">
 
-      document.querySelectorAll('.option-btn').forEach(button => {
-        button.addEventListener('click', () => {
-          const pickedType = button.dataset.type;
-          answers[currentIndex] = pickedType;
-          renderQuestion();
-        });
-      });
-    }
+      <div class="question-number">
+        Pregunta ${currentIndex + 1}
+      </div>
+
+      <p class="question-text">
+        ${question.text}
+      </p>
+
+      <div class="option-list">
+
+        ${question.options.map(option => `
+          
+          <button
+            class="option-btn"
+            type="button"
+            data-type="${option.type}"
+          >
+            ${option.label}
+          </button>
+
+        `).join('')}
+
+      </div>
+
+    </div>
+  `;
+
+  // Activar botones de respuesta
+  document.querySelectorAll('.option-btn').forEach(button => {
+
+    button.addEventListener('click', () => {
+
+      answers[currentIndex] =
+        button.dataset.type;
+
+      document
+        .querySelectorAll('.option-btn')
+        .forEach(btn => btn.classList.remove('selected'));
+
+      button.classList.add('selected');
+
+    });
+
+  });
+}
+    
 
     function determineWinner() {
       const winner = Object.entries(scores).sort((a, b) => b[1] - a[1]);
@@ -226,7 +244,6 @@
         </div>
       `;
 
-      progressEl.textContent = 'Desempate';
       nextBtn.textContent = 'Ver resultado';
       prevBtn.disabled = false;
 
@@ -324,6 +341,7 @@
         return;
       }
 
+      
       const winner = determineWinner();
       if (winner) {
         showResult();

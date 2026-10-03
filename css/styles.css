@@ -222,7 +222,93 @@ body.inicio {
 
 body.quiz {
     background-image: var(--background-quiz);
+
+    .quiz-intro{
+        margin-top: 0;
+        padding: 0;
+        box-sizing: border-box;
+        width: 100%;
+        min-height: 100vh;
+        display:flex;
+        flex-direction: column; 
+        justify-content:center;
+        align-items:center; 
+        gap:5px;
+
+        h1{
+            font-family: var(--font-header);
+            font-size: 90px;
+            text-align: center; 
+            align-items: center;
+            padding: 20px;
+            margin: 0 auto;
+        }
+
+        p{
+            font-family: var(--font-body);
+            font-size: 30px;
+            text-align: center; 
+            align-items: center;
+            padding: 5px;
+            margin: 0 auto;
+        }
+
+        .start-btn{
+            align-items: center;
+            padding:0;
+            background: transparent !important;
+            border: none;
+            box-shadow: none;
+            border-radius: 0;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+
+            &:hover,
+            &:focus,
+            &:active {
+                background: transparent !important;
+                outline: none;
+                box-shadow: none;
+            
+            }
+            }
+
+
+            img {
+                display: block;
+                max-width: 100%;
+                background: transparent;
+            }
+        }
+    
+    .quiz-questions{
+        .question-card {
+             width: 100%;
+             max-width: 900px;
+             margin: 0 auto;
+        }
+        
+        .question-text {
+            font-family: var(--font-body);
+            margin: 0 auto 55px;
+            max-width: 850px;
+            font-size: 20px;
+            line-height: 1.15;
+            text-align: center;
+        }
+        
+        .option-list {
+             width: 82%;
+             max-width: 650px;
+             margin: 0 auto;
+             display: flex;
+             flex-direction: column;
+             gap: 10px;
+            }
+    }   
 }
+
 
 body.pareja {
     background-image: var(--background-pareja);
@@ -282,3 +368,4 @@ h2 {
     padding: 1rem;
     margin: 0 auto;
 }
+
