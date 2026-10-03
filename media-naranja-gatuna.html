@@ -1,332 +1,102 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <h1>Michis Astrales</h1>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Media Naranja Gatuna</title>
   <link rel="icon" href="favicon.ico" />
   <link rel="stylesheet" href="https://use.typekit.net/qzj8zld.css" />
-  <link rel="stylesheet" href="styles.css" />
-  <style>
-    * { box-sizing: border-box; }
+  <link rel="stylesheet" href="./css/styles.css"/>
 
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      background:
-        radial-gradient(circle at top, rgba(255,255,255,0.4), transparent 30%),
-        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
-      color: var(--text);
-    }
-
-    .page {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 48px 20px 80px;
-    }
-
-    .hero {
-      background: rgba(255,255,255,0.5);
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      box-shadow: var(--shadow);
-      padding: 28px 30px 20px;
-      margin-bottom: 28px;
-    }
-
-    .eyebrow {
-      display: inline-block;
-      margin-bottom: 12px;
-      padding: 7px 14px;
-      background: rgba(215, 111, 45, 0.12);
-      border: 1px solid rgba(215, 111, 45, 0.18);
-      border-radius: 999px;
-      color: var(--accent-dark);
-      font-size: 0.76rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    h1 {
-      margin: 0;
-      font-family: 'neulis-cursive', 'Tenon', system-ui, Arial, sans-serif;
-      font-size: clamp(2.7rem, 6vw, 5rem);
-      line-height: 0.95;
-      color: #1f1a17;
-    }
-
-    .intro {
-      margin: 18px 0 0;
-      max-width: 780px;
-      color: var(--muted);
-      font-size: 1.06rem;
-      line-height: 1.7;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-      margin-top: 28px;
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      box-shadow: var(--shadow);
-      padding: 20px 18px;
-    }
-
-    .card h2 {
-      margin: 0 0 12px;
-      font-size: 1.2rem;
-      color: var(--text);
-    }
-
-    .card p,
-    .card li,
-    .card td,
-    .card th {
-      color: var(--muted);
-      line-height: 1.6;
-      font-size: 0.98rem;
-    }
-
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 10px;
-    }
-
-    .tag {
-      display: inline-block;
-      padding: 7px 10px;
-      background: rgba(35, 29, 24, 0.05);
-      border: 1px solid rgba(35, 29, 24, 0.08);
-      border-radius: 999px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .section {
-      margin-top: 34px;
-      background: rgba(255,255,255,0.5);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 24px 22px;
-      box-shadow: var(--shadow);
-    }
-
-    .section h3 {
-      margin: 0 0 16px;
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      font-family: 'neulis-cursive', 'Tenon', system-ui, Arial, sans-serif;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      overflow: hidden;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.4);
-    }
-
-    th, td {
-      border-bottom: 1px solid var(--line);
-      padding: 12px 10px;
-      text-align: left;
-      vertical-align: top;
-    }
-
-    th {
-      background: rgba(215, 111, 45, 0.08);
-      color: var(--text);
-      font-weight: 800;
-    }
-
-    .profile {
-      display: inline-block;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(215,111,45,0.1);
-      color: var(--accent-dark);
-      font-weight: 700;
-      font-size: 0.82rem;
-    }
-
-    .result-box {
-      margin-top: 18px;
-      padding: 20px 18px;
-      border-radius: 20px;
-      border: 1px solid rgba(215,111,45,0.2);
-      background: linear-gradient(135deg, rgba(215,111,45,0.08), rgba(255,255,255,0.5));
-    }
-
-    .result-box strong {
-      color: var(--accent-dark);
-    }
-
-    ul {
-      margin: 10px 0 0 18px;
-      padding: 0;
-    }
-
-    li + li {
-      margin-top: 10px;
-    }
-
-    .dynamic-summary {
-      margin-top: 28px;
-      background: linear-gradient(135deg, rgba(215,111,45,0.08), rgba(255,255,255,0.7));
-      border: 1px solid rgba(215,111,45,0.18);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-      padding: 22px 20px;
-    }
-
-    .dynamic-summary h3 {
-      margin: 0 0 12px;
-      font-family: 'neulis-cursive', 'Tenon', system-ui, Arial, sans-serif;
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-    }
-
-    .dynamic-summary p {
-      margin: 0 0 10px;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .dynamic-summary strong {
-      color: var(--accent-dark);
-    }
-  </style>
 </head>
-<body>
-  <div class="page">
-    <header class="hero">
-      <div class="eyebrow">Compatibilidad felina</div>
-      <h1>Media Naranja Gatuna</h1>
-      <p class="intro">
-        Esta sección responde a la pregunta final del recorrido: dado el resultado de tu signo y el resultado
-        del patrón o clasificación popular, ¿qué raza sería tu compañero felino ideal? La clave no está en
-        combinar personalidades humanas, sino en encontrar una raza que conviva bien con la raza que ya te tocó.
-      </p>
-    </header>
 
-    <div id="dynamic-result" class="dynamic-summary"></div>
 
-    <section class="grid">
-      <article class="card">
-        <h2>1. Principio base</h2>
-        <p>
-          La compatibilidad entre razas depende más del nivel de energía y de la necesidad de interacción que
-          de cualquier otro factor. Los gatos activos suelen convivir mejor entre sí; los independientes toleran
-          la distancia; y los cariñosos se refuerzan entre ellos.
-        </p>
-      </article>
+<body class="naranja">
 
-      <article class="card">
-        <h2>2. Perfiles</h2>
-        <div class="tags">
-          <span class="tag">A — Activo</span>
-          <span class="tag">B — Sociable</span>
-          <span class="tag">C — Tranquilo</span>
-          <span class="tag">D — Cariñoso</span>
+  <section class="intro" id="intro">
+    <h1>Media Naranja Gatuna</h1>
+    <p>¿qué raza sería tu compañero felino ideal?</p>
+    <button class="section-next" data-next="principio" type="button">
+    <img src="./img/Patita_blanca.png" alt="Siguiente">
+    </button>
+  </section>
+
+  <section class="principio" id="principio">
+    <p>
+      La compatibilidad entre razas depende más del nivel de energía
+      y de la necesidad de interacción que de cualquier otro factor.
+      Los gatos activos suelen convivir mejor entre sí; los
+      independientes toleran la distancia; y los cariñosos se
+      refuerzan entre ellos.
+    </p>
+    <button class="section-next" data-next="personalidad" type="button">
+      <img src="./img/Patita_blanca.png" alt="Siguiente">
+    </button>
+  </section>
+
+  <section class="personalidad" id="personalidad">
+    <div class="personalidad-grid">
+
+        <!-- Columna izquierda -->
+        <div class="personalidad-espacio"></div>
+
+        <!-- Columna central -->
+        <div class="personalidad-card">
+          <div class="personalidad-rectangulo"></div>
+            <h2 id="personalidad-tipo">
+                Activo / Enérgico
+            </h2>
         </div>
-      </article>
 
-      <article class="card">
-        <h2>3. Compatibilidad</h2>
-        <p>
-          Los perfiles B y D funcionan muy bien juntos porque ambos buscan cercanía; los perfiles A se sienten más
-          cómodos con otros A; y los C suelen encajar mejor con otros C.
-        </p>
-      </article>
-    </section>
+        <!-- Columna derecha -->
+        <div class="personalidad-boton">
+            <button class="section-next" data-next="match" type="button">
+                    <img src="./img/Patita_blanca.png" alt="Siguiente">
+            </button>
+        </div>
+    </div>
+  </section>
 
-    <section class="section">
-      <h3>Perfiles de temperamento</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Perfil</th>
-            <th>Descripción</th>
-            <th>Compatible con</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><span class="profile">A</span></td>
-            <td>Activo / Enérgico. Necesita juego y estímulo constante.</td>
-            <td>Otro perfil A</td>
-          </tr>
-          <tr>
-            <td><span class="profile">B</span></td>
-            <td>Sociable / Vocal. Busca interacción constante, con humanos u otros gatos.</td>
-            <td>Perfil B o D</td>
-          </tr>
-          <tr>
-            <td><span class="profile">C</span></td>
-            <td>Tranquilo / Independiente. Prefiere la calma y la distancia.</td>
-            <td>Otro perfil C</td>
-          </tr>
-          <tr>
-            <td><span class="profile">D</span></td>
-            <td>Cariñoso / Dependiente. Necesita cercanía y contacto físico/emocional.</td>
-            <td>Perfil D o B</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+  <section class="match" id="match">
+    <div class="match-grid">
 
-    <section class="section">
-      <h3>Tu compañero ideal según el patrón</h3>
-      <div class="result-box">
-        <p><strong>Gato naranja</strong> — Perfil dominante: <strong>B (Sociable / Vocal)</strong></p>
-        <p>
-          Sociable, cariñoso, extrovertido y juguetón; busca constantemente interacción. El compañero ideal suele
-          ser una raza de perfil B o D, como Korat, Habana (Havana Brown) o Siamés.
-        </p>
-      </div>
+        <!-- COLUMNA 1: ESPACIO -->
+        <div class="match-espacio"></div>
 
-      <div class="result-box">
-        <p><strong>Gato blanco</strong> — Perfil dominante: <strong>C (Tranquilo / Independiente)</strong></p>
-        <p>
-          Reservado, tranquilo y sensible al entorno. Su mejor pareja suele ser una raza de perfil C, como American
-          Shorthair, American Wirehair o Británico de Pelo Corto.
-        </p>
-      </div>
+        <!-- COLUMNA 2: PERSONALIDAD -->
+        <div class="match-card">
+            <h2 id="match-personalidad">
+                Activo / Enérgico
+            </h2>
+            <div class="match-rectangulo">
+                <!-- Aquí después podemos poner imagen si quieres -->
+            </div>
+        </div>
 
-      <div class="result-box">
-        <p><strong>Gato tabby</strong> — Perfil dominante: <strong>A (Activo / Enérgico)</strong></p>
-        <p>
-          Enérgico, curioso y cazador. El mejor compañero suele ser otra raza del mismo perfil A, como Abisinio,
-          Egyptian Mau o Singapura.
-        </p>
-      </div>
-    </section>
+        <!-- COLUMNA 3: GATO QUE TE DEBE SALIR -->
+        <div class="match-card">
+            <h2 id="match-gato">
+                Tu gato ideal
+            </h2>
+            <div class="match-rectangulo">
+                <!-- Aquí después podemos poner la imagen del gato -->
+            </div>
+        </div>
 
-    <section class="section">
-      <h3>Cómo se combina con el signo</h3>
-      <ul>
-        <li>Perfil del signo = cluster de raza según el símbolo zodiacal.</li>
-        <li>Perfil del patrón = cluster dominante del resultado del test.</li>
-        <li>Si ambos coinciden, el resultado se refuerza.</li>
-        <li>Si no coinciden, el patrón tiene prioridad porque refleja cómo la persona se describe a sí misma.</li>
-      </ul>
-      <p class="intro" style="margin-top:16px;">
-        La lógica final es simple: la mejor compatibilidad no consiste en repetir el mismo perfil, sino en escoger un
-        gato que haga sentido con la energía que tú traes y con la energía de tu gato de nacimiento.
-      </p>
-    </section>
+        <!-- COLUMNA 4: BOTÓN -->
+        <div class="match-boton">
+            <button class="section-next"
+                    data-next="descripcion"
+                    type="button">
+                <img src="./img/Patita_blanca.png" alt="Siguiente">
+            </button>
+        </div>
+    </div>
+</section>
+
   </div>
+
+</section>
 
   <script>
     const profileByType = {
@@ -440,6 +210,57 @@
       return safePool[0] || pool[0];
     }
 
+    function renderPersonalityResult() {
+
+  const personalityElement = document.getElementById('personalidad-tipo');
+
+  if (!personalityElement) return;
+
+  const quizData = JSON.parse(
+    localStorage.getItem('michiQuizResult') || '{}'
+  );
+
+  const resultEntries = Array.isArray(quizData.results)
+    ? quizData.results
+    : [];
+
+  if (resultEntries.length === 0) {
+    personalityElement.textContent = 'Sin resultado';
+    return;
+  }
+
+  const profileWeights = {
+    A: 0,
+    B: 0,
+    C: 0,
+    D: 0
+  };
+
+  resultEntries.forEach((entry) => {
+
+    const profile = profileByType[entry.type];
+
+    if (profile) {
+      profileWeights[profile] += Number(entry.percent) || 0;
+    }
+
+  });
+
+  const finalProfile = Object.entries(profileWeights)
+    .sort((a, b) => b[1] - a[1])[0][0];
+
+  const profileLabel = {
+    A: 'Activo / Enérgico',
+    B: 'Sociable / Vocal',
+    C: 'Tranquilo / Independiente',
+    D: 'Cariñoso / Dependiente'
+  };
+
+  personalityElement.textContent =
+    profileLabel[finalProfile] || 'Sin resultado';
+
+}
+
     function renderDynamicResult() {
       const container = document.getElementById('dynamic-result');
       if (!container) return;
@@ -503,6 +324,7 @@
     }
 
     renderDynamicResult();
+    renderPersonalityResult();
   </script>
 </body>
 </html>
