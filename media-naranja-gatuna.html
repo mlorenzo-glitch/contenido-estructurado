@@ -43,9 +43,7 @@
         <!-- Columna central -->
         <div class="personalidad-card">
           <div class="personalidad-rectangulo"></div>
-            <h2 id="personalidad-tipo">
-                Activo / Enérgico
-            </h2>
+            <h2 id="personalidad-tipo"></h2>
         </div>
 
         <!-- Columna derecha -->
@@ -65,23 +63,15 @@
 
         <!-- COLUMNA 2: PERSONALIDAD -->
         <div class="match-card">
-            <h2 id="match-personalidad">
-                Activo / Enérgico
-            </h2>
-            <div class="match-rectangulo">
-                <!-- Aquí después podemos poner imagen si quieres -->
+          <div class="match-rectangulo"></div>
+            <h2 id="match-personalidad"></h2>
             </div>
-        </div>
 
         <!-- COLUMNA 3: GATO QUE TE DEBE SALIR -->
         <div class="match-card">
-            <h2 id="match-gato">
-                Tu gato ideal
-            </h2>
-            <div class="match-rectangulo">
-                <!-- Aquí después podemos poner la imagen del gato -->
+          <div class="match-rectangulo"></div>
+            <h2 id="match-gato"></h2>
             </div>
-        </div>
 
         <!-- COLUMNA 4: BOTÓN -->
         <div class="match-boton">
@@ -92,7 +82,44 @@
             </button>
         </div>
     </div>
-</section>
+  </section>
+
+   <section class="descripcion" id="descripcion">
+      <div class="personalidad-grid">
+
+        <!-- COLUMNA IZQUIERDA -->
+        <div class="personalidad-espacio"></div>
+
+        <!-- COLUMNA CENTRAL -->
+        <div class="descripcion-card">
+            <h2 id="descripcion-tipo">
+                Activo / Enérgico
+            </h2>
+            <div class="perfil-predominante">
+                <p><strong id="descripcion-perfil"></strong></p>
+            </div>
+            <div class="descripcion-bloque">
+                <h3>Descripción</h3>
+                <p id="descripcion-personalidad"></p>
+
+            </div>
+
+            <div class="compatibilidad-bloque">
+                <h3>Compatibilidad</h3>
+                <p><strong id="descripcion-gato"></strong> </p>
+                <p id="descripcion-compatibilidad"> </p>
+            </div>
+        </div>
+
+        <!-- COLUMNA DERECHA -->
+        <div class="personalidad-boton">
+            <button class="section-next" data-next="fin" type="button">
+              <img src="./img/Patita_blanca.png" alt="Siguiente">
+            </button>
+        </div>
+
+     </div>
+    </section>
 
   </div>
 
@@ -210,121 +237,184 @@
       return safePool[0] || pool[0];
     }
 
-    function renderPersonalityResult() {
+    function getQuizProfile() {
 
-  const personalityElement = document.getElementById('personalidad-tipo');
+      const quizData = JSON.parse(
+          localStorage.getItem('michiQuizResult') || '{}'
+      );
 
-  if (!personalityElement) return;
+      const resultEntries = Array.isArray(quizData.results)
+          ? quizData.results
+          : [];
 
-  const quizData = JSON.parse(
-    localStorage.getItem('michiQuizResult') || '{}'
-  );
+      if (resultEntries.length === 0) {
+          return null;
+      }
 
-  const resultEntries = Array.isArray(quizData.results)
-    ? quizData.results
-    : [];
+      const profileWeights = {
+          A: 0,
+          B: 0,
+          C: 0,
+          D: 0
+      };
 
-  if (resultEntries.length === 0) {
-    personalityElement.textContent = 'Sin resultado';
-    return;
-  }
+      resultEntries.forEach((entry) => {
+          const profile = profileByType[entry.type];
+          if (profile) {
+              profileWeights[profile] += Number(entry.percent) || 0;
+          }
 
-  const profileWeights = {
-    A: 0,
-    B: 0,
-    C: 0,
-    D: 0
-  };
+      });
 
-  resultEntries.forEach((entry) => {
+      const finalProfile = Object.entries(profileWeights)
+          .sort((a, b) => b[1] - a[1])[0][0];
 
-    const profile = profileByType[entry.type];
-
-    if (profile) {
-      profileWeights[profile] += Number(entry.percent) || 0;
+      return {
+          profile: finalProfile,
+          weights: profileWeights,
+          quizData: quizData,
+          results: resultEntries
+      };
     }
 
-  });
-
-  const finalProfile = Object.entries(profileWeights)
-    .sort((a, b) => b[1] - a[1])[0][0];
-
-  const profileLabel = {
+    const profileLabel = {
     A: 'Activo / Enérgico',
     B: 'Sociable / Vocal',
     C: 'Tranquilo / Independiente',
     D: 'Cariñoso / Dependiente'
   };
 
-  personalityElement.textContent =
-    profileLabel[finalProfile] || 'Sin resultado';
+    const profileDescription = {
+    A: {
+      nombre: 'Activo / Enérgico',
+      descripcion: 'Eres una persona activa, curiosa y llena de energía. Te gusta explorar, jugar y mantenerte en movimiento.',
+      gato: 'Abisinio',
+      compatibilidad: 'Un gato activo, curioso y enérgico que puede seguir tu ritmo.'
+    },
 
-}
+    B: {
+      nombre: 'Sociable / Vocal',
+      descripcion: 'Eres una persona sociable, expresiva y comunicativa. Disfrutas de la compañía y de tener una conexión cercana.',
+      gato: 'Siamés',
+      compatibilidad: 'Un gato sociable y comunicativo que disfruta crear un vínculo cercano.'
+    },
 
-    function renderDynamicResult() {
-      const container = document.getElementById('dynamic-result');
-      if (!container) return;
+    C: {
+      nombre: 'Tranquilo / Independiente',
+      descripcion: 'Eres una persona tranquila, equilibrada e independiente. Valoras tu espacio, pero también disfrutas de una compañía relajada.',
+      gato: 'Ruso Azul',
+      compatibilidad: 'Un gato tranquilo e independiente que respeta tu espacio y crea un vínculo especial.'
+    },
 
-      const quizData = JSON.parse(localStorage.getItem('michiQuizResult') || '{}');
-      const breedData = JSON.parse(localStorage.getItem('michiBreed') || '{}');
+    D: {
+      nombre: 'Cariñoso / Dependiente',
+      descripcion: 'Eres una persona cariñosa y cercana. Disfrutas demostrar afecto y crear vínculos fuertes con quienes te rodean.',
+      gato: 'Ragdoll',
+      compatibilidad: 'Un gato afectuoso y cercano que disfruta pasar tiempo contigo.'
+    }
+  };
 
-      const resultEntries = Array.isArray(quizData.results) ? quizData.results : [];
-      const breedName = breedData.name || 'Raza del signo';
-      const signName = breedData.sign || 'Tu signo';
-      const breedProfile = getBreedProfile(breedName);
+  function renderPersonalitySection() {
 
-      const profileWeights = { A: 0, B: 0, C: 0, D: 0 };
-      resultEntries.forEach((entry) => {
-        const profile = profileByType[entry.type] || 'B';
-        profileWeights[profile] += Number(entry.percent) || 0;
-      });
+    const result = getQuizProfile();
 
-      // Dar un peso adicional a la raza del signo para que influya en el resultado final
-      const zodiacInfluence = 30;
-      profileWeights[breedProfile] += zodiacInfluence;
+    const element = document.getElementById('personalidad-tipo');
 
-      const finalProfile = Object.entries(profileWeights)
-        .sort((a, b) => b[1] - a[1])[0][0];
-
-      const companion = pickCompanion(finalProfile, breedName);
-
-      const companionDescriptions = {
-        'Abisinio': 'El Abisinio es enérgico, curioso y muy juguetón; complementa bien a un compañero que también busca actividad. Juntos mantienen la casa en movimiento: uno propone la exploración y el juego, el otro aporta constancia y compañía, formando un vínculo dinámico y estimulante.'
-      };
-
-      const profileLabel = {
-        A: 'Activo / Enérgico',
-        B: 'Sociable / Vocal',
-        C: 'Tranquilo / Independiente',
-        D: 'Cariñoso / Dependiente'
-      };
-
-      const breakdownHtml = resultEntries.length
-        ? resultEntries
-            .map((entry) => `<li><strong>${entry.type}:</strong> ${entry.percent}%</li>`)
-            .join('')
-        : '<li><strong>Sin datos del quiz todavía.</strong></li>';
-
-      const key = companion.split('(')[0].trim();
-      const companionDesc = companionDescriptions[key] || '';
-
-      container.innerHTML = `
-        <h3>Tu media naranja gatuna</h3>
-        <p><strong>Tu signo:</strong> ${signName}</p>
-        <p><strong>Tu raza del signo:</strong> ${breedName}</p>
-        <p><strong>Perfil final combinado:</strong> <span style="color:#aa4b1a; font-weight:800;">${profileLabel[finalProfile]} (${finalProfile})</span></p>
-
-        <p><strong>Desglose del quiz:</strong></p>
-        <ul>${breakdownHtml}</ul>
-
-        <p><strong>Tu mejor compañero felino:</strong> ${companion}</p>
-        ${companionDesc ? `<p><strong>Por qué es tu media naranja:</strong> ${companionDesc}</p>` : ''}
-        <p style="margin-top:10px;">Tu resultado combina la información del quiz de personalidad (porcentajes) y la energía de la raza asociada a tu signo para ofrecer una recomendación equilibrada en un solo perfil.</p>
-      `;
+    if (!element) return;
+    if (!result) {
+        element.textContent = 'Sin resultado';
+        return;
     }
 
-    renderDynamicResult();
-    renderPersonalityResult();
+    element.textContent =
+        profileLabel[result.profile] || 'Sin resultado';
+  } 
+
+  function renderMatchSection() {
+
+    const result = getQuizProfile();
+
+    const personalityElement =
+        document.getElementById('match-personalidad');
+
+    const catElement =
+        document.getElementById('match-gato');
+
+    if (!result) {
+
+        if (personalityElement) {
+            personalityElement.textContent = 'Sin resultado';
+        }
+
+        if (catElement) {
+            catElement.textContent = 'Sin resultado';
+        }
+
+        return;
+    }
+
+    const finalProfile = result.profile;
+
+    const companion =
+        pickCompanion(finalProfile);
+
+    if (personalityElement) {
+        personalityElement.textContent =
+            profileLabel[finalProfile];
+    }
+
+    if (catElement) {
+        catElement.textContent =
+            companion;
+    }
+  }
+
+  function renderDescriptionSection() {
+  const result = getQuizProfile();
+
+  const tipo = document.getElementById('descripcion-tipo');
+  const perfil = document.getElementById('descripcion-perfil');
+  const personalidad = document.getElementById('descripcion-personalidad');
+  const gato = document.getElementById('descripcion-gato');
+  const compatibilidad = document.getElementById('descripcion-compatibilidad');
+
+  if (!result) {
+    if (tipo) tipo.textContent = 'Sin resultado';
+    if (perfil) perfil.textContent = 'Sin resultado';
+    if (personalidad) personalidad.textContent = 'No se encontró el resultado del quiz.';
+    if (gato) gato.textContent = 'Sin resultado';
+    if (compatibilidad) compatibilidad.textContent = 'Sin resultado';
+    return;
+  }
+
+  const data = profileDescription[result.profile];
+  if (!data) return;
+
+  if (tipo) {
+    tipo.textContent = data.nombre;
+  }
+
+  if (perfil) {
+    perfil.textContent = `Perfil ${result.profile}`;
+  }
+
+  if (personalidad) {
+    personalidad.textContent = data.descripcion;
+  }
+
+  if (gato) {
+    gato.textContent = data.gato;
+  }
+
+  if (compatibilidad) {
+    compatibilidad.textContent = data.compatibilidad;
+  }
+}
+
+  renderPersonalitySection();
+  renderMatchSection();
+  renderDescriptionSection();
+
   </script>
 </body>
 </html>
