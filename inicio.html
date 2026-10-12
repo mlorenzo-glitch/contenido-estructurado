@@ -27,39 +27,63 @@
       <div id="output" aria-live="polite"></div>
     </section>
 
-    <section class="Resultado astral" id="resultado-astral">
-      <div class="resultado-card">
-        <div class="resultado-header">
-          <span class="resultado-badge">Tu michi astral</span>
-          <h2 id="resultado-nombre">Raza</h2>
+   
+    <section class="resultado-astral" id="resultado-astral">
+
+        <div class="resultado-grid">
+
+            <!-- Columna izquierda -->
+            <div class="resultado-espacio"></div>
+
+            <!-- Columna central: tarjeta -->
+            <div class="resultado-card">
+
+                <div class="resultado-header">
+                    <span class="resultado-badge"></span>
+                    <h2 id="resultado-nombre"></h2>
+                </div>
+
+                <div class="resultado-imagen-wrap">
+                    <img id="resultado-img" src="" alt="Raza gatuna">
+                </div>
+
+                <div class="resultado-texto">
+
+                    <p class="resultado-signo">
+                        <strong>Signo zodiacal</strong>
+                        <span id="resultado-signo">-</span>
+                    </p>
+
+                    <div class="resultado-bloque">
+                        <h3>Características</h3>
+                        <p id="resultado-caracteristicas">-</p>
+                    </div>
+
+                    <div class="resultado-bloque">
+                        <h3>Personalidad</h3>
+                        <p id="resultado-personalidad">-</p>
+                    </div>
+
+                    <div class="resultado-bloque">
+                        <h3>Más información</h3>
+                        <div id="resultado-fuentes">-</div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Columna derecha: botón -->
+            <div class="resultado-siguiente">
+                <button id="resultado-siguiente"
+                        type="button"
+                        class="resultado-siguiente">
+                    <img src="./img/Patita_blanca.png" alt="Siguiente">
+                </button>
+            </div>
+
         </div>
 
-        <div class="resultado-body">
-          <div class="resultado-imagen-wrap">
-            <img id="resultado-img" src="" alt="Raza gatuna" />
-          </div>
-
-          <div class="resultado-texto">
-            <p class="resultado-signo">
-              <strong>Signo zodiacal:</strong>
-              <span id="resultado-signo">-</span>
-            </p>
-
-            <h3>Características</h3>
-            <p id="resultado-caracteristicas">-</p>
-
-            <h3>Personalidad</h3>
-            <p id="resultado-personalidad">-</p>
-
-            <h3>Más información</h3>
-            <div id="resultado-fuentes">-</div>
-          </div>
-        </div>
-
-        <button id="resultado-siguiente" type="button" class="resultado-btn">
-          <img src="./img/Patita_blanca.png" alt="Siguiente">
-        </button>
-      </div>
     </section>
   </main>
 
